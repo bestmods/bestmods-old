@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#bgol
+{
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -500;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.81);
+}
+
+#bg
+{
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -600;
+    position: fixed;
+    background: url('/images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+#bestmodsLogo
+{
+    text-align: center;
+    padding: 30px;
+}
+
+#bestmodsLogo img
+{
+    margin: 0 auto;
+}
+
+#searchContainer
+{
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+}
