@@ -14,9 +14,6 @@ $(document).ready(function ()
     var table = $('#mods').DataTable({
         dom: 'rt',
         ajax: "/retrieve",
-        createdRow: function (row, data, index) {
-            console.log(row);
-        },
         "columnDefs": [
             {
                 targets: [0, 7, 8, 9, 10, 11, 13, 14],
