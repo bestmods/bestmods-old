@@ -19,8 +19,17 @@ Route::get('/', function () {
 });
 
 Route::get('/retrieve', function() {
-    $mods = Db::table('mods')->join('games', 'mods.game', '=', 'games.id')->join('seeds', 'mods.seed', '=', 'seeds.id')->get();
-    return json_encode($mods);
+    $mods = Db::table('mods')->join('games', 'mods.game', '=', 'games.id')->join('seeds', 'mods.seed', '=', 'seeds.id')->select(array('mods.id', 'games.name AS gname', 'games.name_short AS gname_short', 'mods.name AS name', 'seeds.name AS sname', 'description_short', 'mods.url AS murl', 'seeds.url AS surl', 'custom_url', 'mods.image AS mimage', 'seeds.image AS simage', 'downloads', 'created_at', 'updated_at', 'rating', 'total_downloads', 'total_views', 'games.image AS gimage'))->get();
+
+    $json = array('data' => array());
+    
+    // We have to format it for DataTables.
+    foreach ($mods as $mod)
+    {
+        $json['data'][] = array($mod->id, $mod->mimage, $mod->name, $mod->description_short, $mod->gname, $mod->sname, $mod->rating, $mod->total_downloads, $mod->total_views, $mod->murl, $mod->surl, $mod->custom_url, '', $mod->gimage, $mod->simage);
+    }
+
+    return json_encode($json);
 });
 
 Route::get('/view/{mod}', function ($mod) {
