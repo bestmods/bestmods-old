@@ -58,7 +58,7 @@ $(document).ready(function ()
             {
                 targets: 5,
                 "render": function ( data, type, row, meta ) {
-                    return '<div class="card-seed"><img class="card-icon" src="/images/seeds/' + row[14] + '" alt="Icon" /> <a href="' + row[9] + '" class="hover:underline">' + data + '</a></div>';
+                    return '<div class="card-seed"><img class="card-icon" src="/images/seeds/' + row[14] + '" alt="Icon" /> <a href="' + row[10] + '" class="hover:underline">' + data + '</a></div>';
                   }
             },
             {
