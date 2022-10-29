@@ -8,7 +8,8 @@ import 'datatables.net-scroller-dt';
 window.DataTable = setup(window, $)
 
 import '../css/datatables.min.css';
-import { add } from 'lodash';
+
+import './prettyprint';
 
 $(document).ready(function ()
 {
