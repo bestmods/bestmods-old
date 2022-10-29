@@ -9,8 +9,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('mods', function (Blueprint $table) {
-            $table->dropUnique('seed');
-            $table->dropUnique('url');
             $table->unique(array('seed', 'url'));
         });
 
