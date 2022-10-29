@@ -153,6 +153,6 @@ tbody
 tbody tr
 {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-direction: column;
 }
