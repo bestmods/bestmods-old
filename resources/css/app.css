@@ -142,4 +142,10 @@ pre
     padding: 1em;
     border-radius: 2px;
     background-color: rgba(0, 88, 81, 0.5);
+    white-space: pre-wrap;
+}
+
+tbody
+{
+    display: flex;
 }
