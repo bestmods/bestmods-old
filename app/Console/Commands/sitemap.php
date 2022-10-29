@@ -24,7 +24,18 @@ class sitemap extends Command
         // We have to format it for DataTables.
         foreach ($mods as $mod)
         {
-            $sitemap->add(Url::create(config('app.url') . '/view/' . $mod->custom_url));
+            $item = 0;
+
+            if (empty($mod->custom_url))
+            {
+                $item = $mod->id;
+            }
+            else
+            {
+                $item = $mod->custom_url;
+            }
+
+            $sitemap->add(Url::create(config('app.url') . '/view/' . $item)->setPriority(0.5));
         }
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
