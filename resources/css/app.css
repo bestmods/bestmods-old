@@ -149,3 +149,10 @@ tbody
 {
     display: flex;
 }
+
+tbody tr
+{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
