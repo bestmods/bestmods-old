@@ -78,7 +78,7 @@ $(document).ready(function ()
                         link = row[11];
                     }
 
-                    return '<div class="card-buttons text-center"><a href="/view/' + link + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">View</a> <a href="' + row[10] + row[9] + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2" target="_blank">Original</a></div>';
+                    return '<div class="card-buttons text-center"><a href="/view/' + link + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">View</a> <a href="' + row[10] + '/' + row[9] + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2" target="_blank">Original</a></div>';
                     }
             }
         ]
