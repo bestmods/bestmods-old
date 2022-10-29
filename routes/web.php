@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\DB;
 
 use Psr\Http\Message\ServerRequestInterface;
 
+use \Illuminate\Support\HtmlString;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +50,9 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
     $mod_db = ($mod_db->count() > 0) ? $mod_db->join('games', 'mods.game', '=', 'games.id')->join('seeds', 'mods.seed', '=', 'seeds.id')->paginate(1, array('mods.id', 'games.name AS gname', 'mods.name AS name', 'seed', 'description', 'description_short', 'mods.url AS murl', 'seeds.url AS surl', 'custom_url', 'mods.image AS mimage', 'seeds.image AS simage', 'install_help', 'downloads', 'screenshots', 'created_at', 'updated_at', 'rating', 'total_downloads', 'total_views', 'seeds.name AS sname'))->first() : NULL;
 
     Db::table('mods')->where('id', $mod_db->id)->update(array('total_views' => $mod_db->total_views + 1));
+
+    $mod_db->description = new HtmlString($mod_db->description);
+    $mod_db->install_help = new HtmlString($mod_db->install_help);
 
     return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view]);
 });

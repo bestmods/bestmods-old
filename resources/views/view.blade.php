@@ -28,10 +28,10 @@
                 <div id="modContent" class="boxView p-5">
                     <div id="viewContent"></div>
                     <div data-view data-id="overview" class="hidden">
-                        {{!! $mod->description !!}}
+                        {{ $mod->description }}
                     </div>
                     <div data-view data-id="install" class="hidden">
-                        <p>{{!! $mod->install_help !!}}</p>
+                        <p>{{ $mod->install_help }}</p>
                     </div>
                     <div data-view data-id="downloads" class="hidden">
                         <p>Coming soon!</p>
