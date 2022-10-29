@@ -145,6 +145,11 @@ pre
     white-space: pre-wrap;
 }
 
+table 
+{
+    border-color: transparent !important;
+}
+
 tbody
 {
     display: flex;
