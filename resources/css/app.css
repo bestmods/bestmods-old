@@ -93,7 +93,6 @@
     vertical-align: middle;
 }
 
-
 .card-seed img
 {
     display: inline-block;
@@ -102,4 +101,31 @@
 .card-seed a
 {
     vertical-align: middle;
+}
+
+.socialIcon
+{
+    margin-right: 2em;
+}
+
+.boxView
+{
+	border-radius: 0px 0px 5px 5px;
+	background-color: rgba(0, 0, 0, 0.5) !important;
+	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+}
+
+.hiddenView
+{
+    visibility: hidden !important;
+    opacity: 0 !important;
+    -webkit-transition: visibility 3s, opacity 0.5s linear !important;
+    -moz-transition: visibility 3s, opacity 0.5s linear !important;
+    -o-transition: visibility 3s, opacity 0.5s linear !important;
+    transition: visibility 3s, opacity 0.5s linear !important;
+}
+
+.viewSel
+{
+    background-color: rgba(0, 85, 100, 0.5) !important;
 }

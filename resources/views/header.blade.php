@@ -1,7 +1,7 @@
 
 <header>
     <div id="bestmodsLogo">
-        <img src="/images/bestmods.png" alt="logo" />
+        <a href="/"><img src="/images/bestmods.png" alt="logo" /></a>
     </div>
     <div id="searchContainer">
         <form>   

@@ -14,7 +14,9 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "mallardduck/blade-boxicons": "^2.3",
-        "spatie/laravel-sitemap": "^6.2"
+        "nyholm/psr7": "^1.5",
+        "spatie/laravel-sitemap": "^6.2",
+        "symfony/psr-http-message-bridge": "^2.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
