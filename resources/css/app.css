@@ -129,3 +129,10 @@
 {
     background-color: rgba(0, 85, 100, 0.5) !important;
 }
+
+.ipsAttachLink
+{
+    padding: 0.8em;
+    border-radius: 5px;
+    background-color: rgba(3, 85, 179, 0.5);
+}
