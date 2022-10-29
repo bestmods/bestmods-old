@@ -7,6 +7,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 use \Illuminate\Support\HtmlString;
 
+use Illuminate\Support\Facades\URL;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,8 +53,21 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
 
     Db::table('mods')->where('id', $mod_db->id)->update(array('total_views' => $mod_db->total_views + 1));
 
+    $imgUrl = empty($mod_db->mimage) ? "default.png" : $mod_db->mimage;
+    $img = '/images/mods/' . $imgUrl;
+
+    $headinfo = array
+    (
+        'title' => $mod_db->name . ' - Best Mods',
+        'image' => $img,
+        'description' => $mod_db->description_short,
+        'item1' => $mod_db->total_views,
+        'item2' => $mod_db->total_downloads,
+        'url' => Url::to('/view', array('mod' => $mod_db->custom_url))
+    );
+
     $mod_db->description = new HtmlString($mod_db->description);
     $mod_db->install_help = new HtmlString($mod_db->install_help);
 
-    return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view]);
+    return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view, 'headinfo' => $headinfo]);
 });
