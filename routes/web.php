@@ -21,8 +21,13 @@ use Illuminate\Support\Facades\URL;
 */
 
 Route::get('/', function (ServerRequestInterface $request) {
+    $img = '/images/bestmods-filled.png';
+    $icon = '/images/bestmods-icon.png';
+
     $headinfo = array
     (
+        'image' => Url::to($img),
+        'icon' => Url::to($icon),
         'url' => Url::to('/')
     );
 
@@ -61,10 +66,13 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
     $imgUrl = empty($mod_db->mimage) ? "default.png" : $mod_db->mimage;
     $img = '/images/mods/' . $imgUrl;
 
+    $icon = '/images/bestmods-icon.png';
+
     $headinfo = array
     (
         'title' => $mod_db->name . ' - Best Mods',
-        'image' => $img,
+        'image' => Url::to($img),
+        'icon' => Url::to($icon),
         'description' => $mod_db->description_short,
         'item1' => $mod_db->total_views,
         'item2' => $mod_db->total_downloads,

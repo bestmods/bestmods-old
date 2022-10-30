@@ -17,24 +17,25 @@
     <meta property="og:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta property="og:site_name" content="Best Mods">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ isset($headinfo['url']) ? $headinfo['url'] : 'https://bestmods.io/' }}">
-    <meta property="og:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : '/images/bestmods-filled.png' }}">
+    <meta property="og:url" content="{{ isset($headinfo['url']) ? $headinfo['url'] : Illuminate\Support\Facades\URL::to('/') }}">
+    <meta property="og:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
     <meta name="twitter:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta name="twitter:site" content="@modcommunity_">
-    <meta name="twitter:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : '/images/bestmods-filled.png' }}">
+    <meta name="twitter:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
 
     <link rel="canonical" href="{{ isset($headinfo['url']) ? $headinfo['url'] : 'https://bestmods.io/' }}">
     <!-- <link rel="manifest" href="https://moddingcommunity.com/forums/manifest.webmanifest/">
     <meta name="msapplication-config" content="https://moddingcommunity.com/forums/browserconfig.xml/">-->
+
     <meta name="msapplication-starturl" content="/">
     <meta name="application-name" content="Best Mods">
     <meta name="apple-mobile-web-app-title" content="Best Mods">
     <meta name="theme-color" content="#181a1b">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="/images/bestmods-icon.png">
+    <link rel="apple-touch-icon" href="{{ isset($headinfo['icon']) ? $headinfo['icon'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
