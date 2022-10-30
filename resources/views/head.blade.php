@@ -36,9 +36,9 @@
     <meta property="og:url" content="{{ isset($headinfo['url']) ? $headinfo['url'] : Illuminate\Support\Facades\URL::to('/') }}">
     <meta property="og:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
 
-    <link rel="canonical" href="{{ isset($headinfo['url']) ? $headinfo['url'] : 'https://bestmods.io/' }}">
+    <link rel="canonical" href="{{ isset($headinfo['url']) ? $headinfo['url'] : Illuminate\Support\Facades\URL::to('/') }}">
 
-    <meta name="msapplication-starturl" content="/">
+    <meta name="msapplication-starturl" content="{{ isset($headinfo['url']) ? $headinfo['url'] : Illuminate\Support\Facades\URL::to('/') }}">
     <meta name="application-name" content="Best Mods">
     <meta name="apple-mobile-web-app-title" content="Best Mods">
     <meta name="theme-color" content="#181a1b">
