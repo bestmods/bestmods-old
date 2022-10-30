@@ -22,7 +22,7 @@
 
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
-    <meta property="og:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
+    <meta property="og:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta property="og:site_name" content="Best Mods">
     <meta property="og:type" content="{{ isset($headinfo['type']) ? $headinfo['type'] : 'website' }}">
     @if (isset($headinfo['type']) && $headinfo['type'] == 'article')
