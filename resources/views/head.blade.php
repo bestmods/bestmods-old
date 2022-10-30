@@ -11,24 +11,32 @@
     <title>{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}</title>
     <meta name="description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta name="keywords" content="mods, modding, games, gaming, communities, best, servers, directory, discovery">
+    <meta name="robots" content="{{ isset($headinfo['robots']) ? $headinfo['robots'] : 'index, follow' }}">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
+    <meta name="twitter:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
+    <meta name="twitter:site" content="@modcommunity_">
+    <meta name="twitter:creator" content="@modcommunity_">
+    <meta name="twitter:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
 
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
     <meta property="og:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta property="og:site_name" content="Best Mods">
-    <meta property="og:type" content="article">
+    <meta property="og:type" content="{{ isset($headinfo['type']) ? $headinfo['type'] : 'website' }}">
+    @if (isset($headinfo['type']) && $headinfo['type'] == 'article')
+    <meta property="article:published_time" content="{{ isset($headinfo['ptime']) ? $headinfo['ptime'] : '' }}">
+    <meta property="article:modified_time" content="{{ isset($headinfo['mtime']) ? $headinfo['mtime'] : '' }}">
+    <meta property="article:expiration_time " content="{{ isset($headinfo['etime']) ? $headinfo['etime'] : '' }}">
+    <meta property="article:author " content="{{ isset($headinfo['author']) ? $headinfo['author'] : 'Best Mods' }}">
+    <meta property="article:section " content="{{ isset($headinfo['section']) ? $headinfo['section'] : 'Technology' }}">
+    <meta property="article:tag " content="{{ isset($headinfo['tags']) ? $headinfo['section'] : 'mod' }}">
+    @endif
     <meta property="og:url" content="{{ isset($headinfo['url']) ? $headinfo['url'] : Illuminate\Support\Facades\URL::to('/') }}">
     <meta property="og:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
-    <meta name="twitter:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse for the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
-    <meta name="twitter:site" content="@modcommunity_">
-    <meta name="twitter:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
-
     <link rel="canonical" href="{{ isset($headinfo['url']) ? $headinfo['url'] : 'https://bestmods.io/' }}">
-    <!-- <link rel="manifest" href="https://moddingcommunity.com/forums/manifest.webmanifest/">
-    <meta name="msapplication-config" content="https://moddingcommunity.com/forums/browserconfig.xml/">-->
 
     <meta name="msapplication-starturl" content="/">
     <meta name="application-name" content="Best Mods">

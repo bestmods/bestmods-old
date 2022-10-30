@@ -71,6 +71,8 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
     $headinfo = array
     (
         'title' => $mod_db->name . ' - Best Mods',
+        'robots' => 'noindex, nofollow',
+        'type' => 'article',
         'image' => Url::to($img),
         'icon' => Url::to($icon),
         'description' => $mod_db->description_short,
