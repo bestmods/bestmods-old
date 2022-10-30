@@ -21,7 +21,12 @@ use Illuminate\Support\Facades\URL;
 */
 
 Route::get('/', function (ServerRequestInterface $request) {
-    return view('global', ['page' => 'index']);
+    $headinfo = array
+    (
+        'url' => Url::to('/')
+    );
+
+    return view('global', ['page' => 'index', 'headinfo' => $headinfo]);
 });
 
 Route::get('/retrieve', function(ServerRequestInterface $request) {
