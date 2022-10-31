@@ -135,6 +135,8 @@
     padding: 0.5em;
     border-radius: 5px;
     background-color: rgba(3, 85, 179, 0.5);
+    display: inline-block;
+    max-width: 48em;
 }
 
 pre
@@ -143,6 +145,7 @@ pre
     border-radius: 2px;
     background-color: rgba(0, 88, 81, 0.5);
     white-space: pre-wrap;
+    max-width: 100%;
 }
 
 table 
