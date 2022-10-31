@@ -32,7 +32,7 @@ $(document).ready(function ()
 
                     if (row[1].length)
                     {
-                        image = '/images/mods/' + row[1];
+                        image = '/images/' + row[1];
                     }
 
                     return '<img class="card-image" src="' + image + '" alt="Mod Image"></img>';

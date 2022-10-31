@@ -45,7 +45,26 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
     // We have to format it for DataTables.
     foreach ($mods as $mod)
     {
-        $json['data'][] = array($mod->id, $mod->mimage, $mod->name, $mod->description_short, $mod->gname, $mod->sname, $mod->rating, $mod->total_downloads, $mod->total_views, $mod->murl, $mod->surl, $mod->custom_url, '', $mod->gimage, $mod->simage);
+        // Firstly, decide the image.
+        $img = 'mods/default.png';
+
+        if (!empty($mod->simage))
+        {
+            // Get filename and extension.
+            $parts = explode(".", $mod->simage, 2);
+
+            if (is_array($parts) && count($parts) > 1)
+            {
+                $img = 'seeds/' . $parts[0] . '_full.' . $parts[1];
+            }
+        }
+
+        if (!empty($mod->mimage))
+        {
+            $img = 'mods/' . $mod->mimage;
+        }
+
+        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, $mod->gname, $mod->sname, $mod->rating, $mod->total_downloads, $mod->total_views, $mod->murl, $mod->surl, $mod->custom_url, '', $mod->gimage, $mod->simage);
     }
 
     return json_encode($json);

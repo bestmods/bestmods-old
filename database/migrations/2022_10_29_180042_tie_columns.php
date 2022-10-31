@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::table('mods', function (Blueprint $table) {
             $table->unique(array('seed', 'url'));
         });
-
     }
 
     public function down()
