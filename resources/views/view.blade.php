@@ -34,7 +34,11 @@
                         <p>{{ $mod->install_help }}</p>
                     </div>
                     <div data-view data-id="downloads" class="hidden">
-                        <p>Coming soon!</p>
+                        <p>
+                            @foreach ($mod_db->downloads as $download)
+                                <a class="modDownload" href="{{ $download->url }}" target="_blank">{{ $download->name }}</a>
+                            @endforeach
+                        </p>
                     </div>
                 </id>
             </div>

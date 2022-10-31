@@ -81,7 +81,6 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         'overview';
     }
 
-
     // Assume we're firstly loading based off of custom URL.
     $mod_db = Db::table('mods')->where('custom_url', $mod);
 
@@ -137,6 +136,24 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     $mod_db->install_help =  Cache::remember($key, 8640, function () use ($mod_db) {
         return new HtmlString(Markdown::parse($mod_db->install_help));
     });
+
+    // Parse downloads.
+    $mod_db->downloads = json_decode($mod_db->downloads, true);
+
+    // Loop through each and replace with index.
+    if (is_array($mod_db->downloads))
+    {
+        $i = 1;
+
+        foreach ($mod_db->downloads as $download)
+        {
+            $html = '<a class="modDownload" href="' . $download->url . '" target="_blank">' . $download->name . '</a>';
+
+            // Replace instances in description and install.
+            $mod_db->description = str_replace('{' + $i + '}',  $html, $mod_db->description);
+            $mod_db->install_help = str_replace('{' + $i + '}',  $html, $mod_db->install_help);
+        }
+    }
 
     $base_url = Url::to('/view', array('mod' => $mod_db->custom_url));
 
