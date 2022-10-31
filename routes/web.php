@@ -9,6 +9,9 @@ use \Illuminate\Support\HtmlString;
 
 use Illuminate\Support\Facades\URL;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Mail\Markdown;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,8 +84,17 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
         'url' => Url::to('/view', array('mod' => $mod_db->custom_url))
     );
 
-    $mod_db->description = new HtmlString($mod_db->description);
-    $mod_db->install_help = new HtmlString($mod_db->install_help);
+    $key = 'mod_desc.'.$mod_db->id;
+
+    $mod_db->description = Cache::remember($key, 8640, function () use ($mod_db)  {
+        return new HtmlString(Markdown::parse($mod_db->description));
+    });
+
+    $key = 'mod_install.'.$mod_db->id;
+
+    $mod_db->install_help =  Cache::remember($key, 8640, function () use ($mod_db) {
+        return new HtmlString(Markdown::parse($mod_db->install_help));
+    });
 
     return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view, 'headinfo' => $headinfo]);
 });

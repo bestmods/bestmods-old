@@ -2,8 +2,8 @@
 Browse the best mods in gaming from many sources on the Internet!
 
 <a href="https://bestmods.io/" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview.jpeg" /></a>
-<a href="https://bestmods.io/" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" /></a>
-<a href="https://bestmods.io/" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" /></a>
+<a href="https://bestmods.io/view/csgoesp" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" /></a>
+<a href="https://bestmods.io/view/csgoesp?view=install" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" /></a>
 
 [BestMods.io](https://bestmods.io/)
 
