@@ -157,7 +157,7 @@ tbody
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: content;
+    justify-content: center;
 }
 
 tbody tr
