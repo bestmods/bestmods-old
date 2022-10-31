@@ -12,7 +12,15 @@ An open-source [website](https://bestmods.io) and project made by [Christian Dea
 
 Help support this project and modding in general by spreading the word!
 
-## Contributing
+## Road Map
+A road map for the website may be found [here](https://github.com/orgs/BestMods/projects/1)! Each view represents a month and all items within that view is projected to be completed by the end of the specific month.
+
+## Community
+Best Mods is ran by the [The Modding Community](https://ModdingCommunity.com/) which is a newer project taking modding to the next level by offering a unique marketplace, server and community browser & discovery, and forum! We have a Discord [here](https://dsc.gg/modcommunity) if you want to socialize and interact with others including talented modders and content creators.
+
+Additionally, for Best Mods specifically, you may also use our discussions forum on GitHub [here](https://github.com/orgs/BestMods/discussions)!
+
+### Contributions
 Contributions are always welcomed! Feel free to submit pull requests if you see anything that may be improved or you want to help out with the project in general!
 
 ## Credits
