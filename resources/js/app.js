@@ -52,6 +52,10 @@ $(document).ready(function ()
                     }
             },
             {
+                targets: 3,
+                "className": "card-desc-td"
+            },
+            {
                 targets: 4,
                 "render": function ( data, type, row, meta ) {
                     return '<div class="card-seed"><img class="card-icon" src="/images/games/' + row[13] + '" alt="Icon" /> ' + data + '</div>';
