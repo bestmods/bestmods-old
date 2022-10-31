@@ -1,15 +1,15 @@
 <footer>
-    <div class="flex items-center justify-between p-6 rounded-lg shadow bg-gray-800 m-7">
-        <span class="text-sm text-gray-200 sm:text-center">© 2022 <a href="https://bestmods.io/" class="hover:underline">BestMods</a>. All Rights Reserved.
+    <div class="flex-none md:flex md:flex-row md:flex-wrap md:justify-between p-6 rounded-lg shadow bg-gray-800 m-7">
+        <span class="text-sm text-gray-200 sm:text-center max-w-[50%] justify-start">© 2022 <a href="https://bestmods.io/" class="hover:underline">BestMods</a>. All Rights Reserved.
         </span>
-        <ul class="flex flex-wrap items-center text-sm text-gray-300">
-            <li>
+        <ul class="text-sm text-gray-300 max-w-[50%] flex flex-col justify-start md:flex-row md:flex-wrap md:justify-start">
+            <li class="w-auto">
                 <a href="/" class="mr-4 hover:underline md:mr-6 ">Home</a>
-            </li>
+            </li class="w-auto">
             <li>
                 <a href="https://github.com/BestMods/bestmods" target="_blank" class="mr-4 hover:underline md:mr-6">Source</a>
             </li>
-            <li>
+            <li class="w-auto">
                 <a href="https://moddingcommunity.com/" target="_blank" class="mr-4 hover:underline md:mr-6">Mod Community</a>
             </li>
         </ul>
