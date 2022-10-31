@@ -137,6 +137,7 @@
     background-color: rgba(3, 85, 179, 0.5);
     display: inline-block;
     max-width: 48em;
+    margin-top: 1em;
 }
 
 pre
