@@ -3,7 +3,7 @@
     <div id="bestmodsLogo">
         <a href="/"><img src="/images/bestmods.png" alt="logo" /></a>
     </div>
-    <div id="searchContainer">
+    <div class="p-5 m-auto w-full md:w-6/12">
         <form>   
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
 
