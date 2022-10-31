@@ -8,20 +8,20 @@
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <title>{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}</title>
+    <title>{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Discover The Top Mods On The Internet!' }}</title>
     <meta name="description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}" />
     <meta name="keywords" content="mods, modding, games, gaming, communities, best, servers, directory, discovery" />
     <meta name="robots" content="{{ isset($headinfo['robots']) ? $headinfo['robots'] : 'index, follow' }}" />
 
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
+    <meta property="twitter:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Discover The Top Mods On The Internet!' }}">
     <meta property="twitter:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta property="twitter:site" content="@modcommunity_">
     <meta property="twitter:creator" content="@modcommunity_">
     <meta property="twitter:image" content="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/bestmods-filled.png') }}">
 
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
+    <meta property="og:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Discover The Top Mods On The Internet!' }}">
     <meta property="og:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta property="og:site_name" content="Best Mods">
     <meta property="og:type" content="{{ isset($headinfo['type']) ? $headinfo['type'] : 'website' }}">
