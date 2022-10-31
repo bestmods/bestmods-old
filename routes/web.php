@@ -85,18 +85,35 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
 
     Db::table('mods')->where('id', $mod_db->id)->update(array('total_views' => $mod_db->total_views + 1));
 
-    $imgUrl = empty($mod_db->mimage) ? "default.png" : $mod_db->mimage;
-    $img = '/images/mods/' . $imgUrl;
+    // Firstly, decide the image.
+    $img = 'mods/default.png';
 
-    $icon = '/images/bestmods-icon.png';
+    if (!empty($mod_db->simage))
+    {
+        // Get filename and extension.
+        $parts = explode(".", $mod_db->simage, 2);
+
+        if (is_array($parts) && count($parts) > 1)
+        {
+            $img = 'seeds/' . $parts[0] . '_full.' . $parts[1];
+        }
+    }
+
+    if (!empty($mod_db->mimage))
+    {
+        $img = 'mods/' . $mod_db->mimage;
+    }
+
+
+    $icon = 'bestmods-icon.png';
 
     $headinfo = array
     (
         'title' => $mod_db->name . ' - Best Mods',
         'robots' => 'noindex, nofollow',
         'type' => 'article',
-        'image' => Url::to($img),
-        'icon' => Url::to($icon),
+        'image' => Url::to('/images/' . $img),
+        'icon' => Url::to('/images' . $icon),
         'description' => $mod_db->description_short,
         'item1' => $mod_db->total_views,
         'item2' => $mod_db->total_downloads,
