@@ -149,12 +149,15 @@ pre
 table 
 {
     border-color: transparent !important;
+    width: 100% !important;
 }
 
 tbody
 {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: content;
 }
 
 tbody tr

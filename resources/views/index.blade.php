@@ -1,6 +1,6 @@
 <div class="text-white m-7">
     <h1 class="text-3xl font-bold mb-4">Start Discovering Now!</h1>
-    <table id="mods" class="card">
+    <table id="mods" class="card" style="width: 100%;">
         <thead>
             <th>ID</th>
             <th>Image</th>

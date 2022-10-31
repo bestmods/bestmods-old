@@ -1,8 +1,8 @@
 <footer>
-    <div class="md:flex md:items-center md:justify-between md:p-6 p-4 rounded-lg shadow bg-gray-800 m-7">
+    <div class="flex items-center justify-between p-6 rounded-lg shadow bg-gray-800 m-7">
         <span class="text-sm text-gray-200 sm:text-center">© 2022 <a href="https://bestmods.io/" class="hover:underline">BestMods</a>. All Rights Reserved.
         </span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm text-gray-300 sm:mt-0">
+        <ul class="flex flex-wrap items-center text-sm text-gray-300">
             <li>
                 <a href="/" class="mr-4 hover:underline md:mr-6 ">Home</a>
             </li>
