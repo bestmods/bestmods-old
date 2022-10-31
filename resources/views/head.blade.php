@@ -13,7 +13,7 @@
     <meta name="keywords" content="mods, modding, games, gaming, communities, best, servers, directory, discovery" />
     <meta name="robots" content="{{ isset($headinfo['robots']) ? $headinfo['robots'] : 'index, follow' }}" />
 
-    <meta property="twitter:card" content="summary">
+    <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="{{ isset($headinfo['title']) ? $headinfo['title'] : 'Best Mods - Find The Best Mods For You!' }}">
     <meta property="twitter:description" content="{{ isset($headinfo['description']) ? $headinfo['description'] : 'Browse the best mods in gaming from many sources on the Internet! Project ran by The Modding Community!' }}">
     <meta property="twitter:site" content="@modcommunity_">
