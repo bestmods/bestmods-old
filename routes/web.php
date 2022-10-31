@@ -27,14 +27,16 @@ Route::get('/', function (ServerRequestInterface $request) {
     $img = '/images/bestmods-filled.png';
     $icon = '/images/bestmods-icon.png';
 
+    $base_url = Url::to('/');
+
     $headinfo = array
     (
         'image' => Url::to($img),
         'icon' => Url::to($icon),
-        'url' => Url::to('/')
+        'url' => $base_url
     );
 
-    return view('global', ['page' => 'index', 'headinfo' => $headinfo]);
+    return view('global', ['page' => 'index', 'headinfo' => $headinfo, 'base_url' => $base_url]);
 });
 
 Route::get('/retrieve', function(ServerRequestInterface $request) {
@@ -70,10 +72,15 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
     return json_encode($json);
 });
 
-Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
+Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mod, $view='') {
     $params = $request->getQueryParams();
 
-    $view = (isset($params['view']) && !empty($params['view'])) ? $params['view'] : 'overview';
+    if (empty($view))
+    {
+        $view = (isset($params['view']) && !empty($params['view'])) ? $params['view'] : 
+        'overview';
+    }
+
 
     // Assume we're firstly loading based off of custom URL.
     $mod_db = Db::table('mods')->where('custom_url', $mod);
@@ -104,7 +111,6 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
         $img = 'mods/' . $mod_db->mimage;
     }
 
-
     $icon = 'bestmods-icon.png';
 
     $headinfo = array
@@ -117,7 +123,7 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
         'description' => $mod_db->description_short,
         'item1' => $mod_db->total_views,
         'item2' => $mod_db->total_downloads,
-        'url' => Url::to('/view', array('mod' => $mod_db->custom_url))
+        'url' => Url::to('/view', array('mod' => $mod_db->custom_url, 'view' => $view))
     );
 
     $key = 'mod_desc.'.$mod_db->id;
@@ -132,5 +138,7 @@ Route::get('/view/{mod}', function (ServerRequestInterface $request, $mod) {
         return new HtmlString(Markdown::parse($mod_db->install_help));
     });
 
-    return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view, 'headinfo' => $headinfo]);
+    $base_url = Url::to('/view', array('mod' => $mod_db->custom_url));
+
+    return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url]);
 });

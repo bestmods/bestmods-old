@@ -13,9 +13,6 @@ import './prettyprint';
 
 $(document).ready(function ()
 {
-    var searchParams = new URLSearchParams(window.location.search);
-    var curView = searchParams.has('view') ? searchParams.get('view') : 'overview';
-
     var table = $('#mods').DataTable({
         dom: 'rt',
         ajax: "/retrieve",
@@ -101,10 +98,19 @@ $(document).ready(function ()
     }
     } );
 
+    var main_url = curUrl;
+
     $(document).on('click', '.viewBtn', function(e)
     {
         var tar = $(e.currentTarget);
         var view = tar.attr('data-show-id');
+
+        var new_url = main_url + '/' + view;
+
+        if (history.pushState) 
+        {
+            window.history.pushState({path:new_url},'',new_url);
+        }
 
         reloadContent(view);
     });

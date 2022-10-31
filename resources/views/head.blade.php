@@ -47,6 +47,12 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <!-- make view variable. -->
+    <script type="text/javascript">
+        var curView = '{{ isset($view) ? $view : 'overview' }}';
+        var curUrl = '{{ isset($base_url) ? $base_url : '/' }}';
+    </script>
+
     <!-- CSS and JavaScript -->
     @vite('resources/js/app.js')
 </head>
