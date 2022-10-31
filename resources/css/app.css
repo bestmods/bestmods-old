@@ -48,6 +48,7 @@
 }
 
 .card tbody tr {
+    max-width: 25em;
 	margin: 0.5em;
 	border: none;
 	border-radius: 15px;
