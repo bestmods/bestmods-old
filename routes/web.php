@@ -247,6 +247,8 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
+    $user = Auth::user();
+
     // Check if we're inserting.
     $post_data = $request->getParsedBody();
     $item_created = false;
@@ -429,7 +431,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
     $seeds = Seed::all();
 
     return view('global', ['page' => 'create', 'headinfo' => $headinfo, 'base_url' => $base_url, 'games' => $games, 'seeds' => $seeds, 'type' => $type, 'item_created' => $item_created]);
-})->middleware(['auth0.authenticate:mods:create']);
+})->middleware('auth0.authenticate:mods:create');
 
 /* Auth0 (Authentication) */
 Route::get('/login', \Auth0\Laravel\Http\Controller\Stateful\Login::class)->name('login');
