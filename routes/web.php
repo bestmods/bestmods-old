@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Mail\Markdown;
 
+
+use App\Models\Mod;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,7 +26,7 @@ use Illuminate\Mail\Markdown;
 |
 */
 
-Route::get('/', function (ServerRequestInterface $request) {
+Route::get('/', function (ServerRequestInterface $request) {;
     $img = '/images/bestmods-filled.png';
     $icon = '/images/bestmods-icon.png';
 
@@ -37,10 +40,10 @@ Route::get('/', function (ServerRequestInterface $request) {
     );
 
     return view('global', ['page' => 'index', 'headinfo' => $headinfo, 'base_url' => $base_url]);
-});
+})->middleware(['auth0.authenticate.optional']);
 
 Route::get('/retrieve', function(ServerRequestInterface $request) {
-    $mods = Db::table('mods')->join('games', 'mods.game', '=', 'games.id')->join('seeds', 'mods.seed', '=', 'seeds.id')->select(array('mods.id', 'games.name AS gname', 'games.name_short AS gname_short', 'mods.name AS name', 'seeds.name AS sname', 'description_short', 'mods.url AS murl', 'seeds.url AS surl', 'custom_url', 'mods.image AS mimage', 'seeds.image AS simage', 'downloads', 'created_at', 'updated_at', 'rating', 'total_downloads', 'total_views', 'games.image AS gimage'))->get();
+    $mods = Mod::all(Mod::$columns);
 
     $json = array('data' => array());
     
@@ -50,10 +53,10 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
         // Firstly, decide the image.
         $img = 'mods/default.png';
 
-        if (!empty($mod->simage))
+        if (!empty($mod->seed->image))
         {
             // Get filename and extension.
-            $parts = explode(".", $mod->simage, 2);
+            $parts = explode(".", $mod->seed->image, 2);
 
             if (is_array($parts) && count($parts) > 1)
             {
@@ -61,16 +64,16 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
             }
         }
 
-        if (!empty($mod->mimage))
+        if (!empty($mod->image))
         {
-            $img = 'mods/' . $mod->mimage;
+            $img = 'mods/' . $mod->image;
         }
 
-        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, $mod->gname, $mod->sname, $mod->rating, $mod->total_downloads, $mod->total_views, $mod->murl, $mod->surl, $mod->custom_url, '', $mod->gimage, $mod->simage);
+        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->game->name) ? $mod->game->name : '', isset($mod->seed->name) ? $mod->seed->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seed->url) ? $mod->seed->url : '', $mod->custom_url, '', isset($mod->game->image) ? $mod->game->image : '', isset($mod->seed->image) ? $mod->seed->image : '');
     }
 
     return json_encode($json);
-});
+})->middleware(['auth0.authenticate.optional']);
 
 Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mod, $view='') {
     $params = $request->getQueryParams();
@@ -82,22 +85,20 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     }
 
     // Assume we're firstly loading based off of custom URL.
-    $mod_db = Db::table('mods')->where('custom_url', $mod);
+    $mod = Mod::where('custom_url', $mod)->get(Mod::$columns)->first();
 
     // If we're invalid, try searching by ID.
-    $mod_db = ($mod_db->count() < 1) ? Db::table('mods')->where('mods.id', intval($mod)) : $mod_db;
-    
-    $mod_db = ($mod_db->count() > 0) ? $mod_db->join('games', 'mods.game', '=', 'games.id')->join('seeds', 'mods.seed', '=', 'seeds.id')->paginate(1, array('mods.id', 'games.name AS gname', 'mods.name AS name', 'seed', 'description', 'description_short', 'mods.url AS murl', 'seeds.url AS surl', 'custom_url', 'mods.image AS mimage', 'seeds.image AS simage', 'install_help', 'downloads', 'screenshots', 'created_at', 'updated_at', 'rating', 'total_downloads', 'total_views', 'seeds.name AS sname'))->first() : NULL;
+    $mod = ($mod->exists) ? $mod : Mod::where('id', intval($mod));
 
-    Db::table('mods')->where('id', $mod_db->id)->update(array('total_views' => $mod_db->total_views + 1));
+    $mod->update(array('total_views' => $mod->total_views + 1));
 
     // Firstly, decide the image.
     $img = 'mods/default.png';
 
-    if (!empty($mod_db->simage))
+    if (!empty($mod->seed->image))
     {
         // Get filename and extension.
-        $parts = explode(".", $mod_db->simage, 2);
+        $parts = explode(".", $mod->seed->image, 2);
 
         if (is_array($parts) && count($parts) > 1)
         {
@@ -105,57 +106,77 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         }
     }
 
-    if (!empty($mod_db->mimage))
+    if (!empty($mod->image))
     {
-        $img = 'mods/' . $mod_db->mimage;
+        $img = 'mods/' . $mod->image;
     }
 
     $icon = 'bestmods-icon.png';
 
     $headinfo = array
     (
-        'title' => $mod_db->name . ' - Best Mods',
+        'title' => $mod->name . ' - Best Mods',
         'robots' => 'noindex, nofollow',
         'type' => 'article',
         'image' => Url::to('/images/' . $img),
         'icon' => Url::to('/images' . $icon),
-        'description' => $mod_db->description_short,
-        'item1' => $mod_db->total_views,
-        'item2' => $mod_db->total_downloads,
-        'url' => Url::to('/view', array('mod' => $mod_db->custom_url, 'view' => $view))
+        'description' => $mod->description_short,
+        'item1' => $mod->total_views,
+        'item2' => $mod->total_downloads,
+        'url' => Url::to('/view', array('mod' => $mod->custom_url, 'view' => $view))
     );
 
-    $key = 'mod_desc.'.$mod_db->id;
+    $key = 'mod_desc.'.$mod->id;
 
-    $mod_db->description = Cache::remember($key, 8640, function () use ($mod_db)  {
-        return new HtmlString(Markdown::parse($mod_db->description));
+    $desc = Cache::remember($key, 8640, function () use ($mod)  {
+        return new HtmlString(Markdown::parse($mod->description));
     });
 
-    $key = 'mod_install.'.$mod_db->id;
+    $key = 'mod_install.'.$mod->id;
 
-    $mod_db->install_help =  Cache::remember($key, 8640, function () use ($mod_db) {
-        return new HtmlString(Markdown::parse($mod_db->install_help));
+    $install_help =  Cache::remember($key, 8640, function () use ($mod) {
+        return new HtmlString(Markdown::parse($mod->install_help));
     });
 
     // Parse downloads.
-    $mod_db->downloads = json_decode($mod_db->downloads, true);
+    $downloads = json_decode($mod->downloads, true);
 
     // Loop through each and replace with index.
-    if (is_array($mod_db->downloads))
+    if (is_array($downloads))
     {
         $i = 1;
 
-        foreach ($mod_db->downloads as $download)
+        foreach ($downloads as $download)
         {
             $html = '<a class="modDownload" href="' . $download->url . '" target="_blank">' . $download->name . '</a>';
 
             // Replace instances in description and install.
-            $mod_db->description = str_replace('{' + $i + '}',  $html, $mod_db->description);
-            $mod_db->install_help = str_replace('{' + $i + '}',  $html, $mod_db->install_help);
+            $desc = str_replace('{' + $i + '}',  $html, $desc);
+            $install_help = str_replace('{' + $i + '}',  $html, $install_help);
         }
     }
 
-    $base_url = Url::to('/view', array('mod' => $mod_db->custom_url));
+    $base_url = Url::to('/view', array('mod' => $mod->custom_url));
 
-    return view('global', ['page' => 'view', 'mod' => $mod_db, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url]);
-});
+    return view('global', ['page' => 'view', 'mod' => $mod, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url, 'desc' => $desc, 'install_help' => $install_help, 'downloads' => $downloads]);
+})->middleware(['auth0.authenticate.optional']);
+
+Route::get('/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
+    $base_url = Url::to('/create', array('type' => $type));
+
+    $headinfo = array
+    (
+        'title' => 'Submit - Best Mods',
+        'robots' => 'noindex, nofollow',
+        'type' => 'article',
+        'url' => $base_url
+    );
+
+    return view('global', ['page' => 'create', 'headinfo' => $headinfo, 'base_url' => $base_url]);
+})->middleware(['auth0.authenticate:mods:create']);
+
+
+/* Auth0 (Authentication) */
+Route::get('/login', \Auth0\Laravel\Http\Controller\Stateful\Login::class)->name('login');
+Route::get('/logout', \Auth0\Laravel\Http\Controller\Stateful\Logout::class)->name('logout');
+Route::get('/auth0/callback', \Auth0\Laravel\Http\Controller\Stateful\Callback::class)->name('auth0.callback');

@@ -28,16 +28,20 @@
                 <div id="modContent" class="boxView p-5">
                     <div id="viewContent"></div>
                     <div data-view data-id="overview" class="hidden">
-                        {{ $mod->description }}
+                        {{ isset($desc) ? $desc : 'No description found.' }}
                     </div>
                     <div data-view data-id="install" class="hidden">
-                        <p>{{ $mod->install_help }}</p>
+                        <p>{{ isset($install_help) ? $install_help : 'No installation help found.' }}</p>
                     </div>
                     <div data-view data-id="downloads" class="hidden">
                         <p>
-                            @foreach ($mod_db->downloads as $download)
-                                <a class="modDownload" href="{{ $download->url }}" target="_blank">{{ $download->name }}</a>
-                            @endforeach
+                            @if (isset($downloads) && is_array($downloads))
+                                @foreach ($downloads as $download)
+                                    <a class="modDownload" href="{{ $download->url }}" target="_blank">{{ $download->name }}</a>
+                                @endforeach
+                            @else
+                                No downloads found.
+                            @endif
                         </p>
                     </div>
                 </id>

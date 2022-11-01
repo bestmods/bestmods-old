@@ -195,6 +195,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Auth0\Login\LoginServiceProvider::class,
+
     ],
 
     /*
@@ -209,7 +211,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        //'Auth0' => Auth0\Login\Facade\Auth0::class
     ])->toArray(),
 
 ];

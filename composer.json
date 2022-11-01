@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "auth0/login": "^7.2",
         "blade-ui-kit/blade-ui-kit": "^0.3.4",
         "codeat3/blade-eos-icons": "^1.12",
         "doctrine/dbal": "^3.5",
