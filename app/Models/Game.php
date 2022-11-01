@@ -23,6 +23,6 @@ class Game extends Model
 
     public function mod()
     {
-        return $this->belongsTo(Mod::class, 'seed');
+        return $this->belongsToMany(Mod::class, 'game');
     }
 }

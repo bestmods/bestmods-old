@@ -20,6 +20,6 @@ class Seed extends Model
 
     public function mod()
     {
-        return $this->belongsTo(Mod::class, 'id');
+        return $this->belongsToMany(Mod::class, 'seed');
     }
 }

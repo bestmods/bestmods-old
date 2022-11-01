@@ -37,17 +37,28 @@ class Mod extends Model
 
     protected $fillable = array
     (
-        'total_views'
+        'name',
+        'description', 
+        'description_short',
+        'install_help',
+        'url',
+        'custom_url',
+        'image',
+        'downloads',
+        'screenshots',
+        'rating',
+        'total_views',
+        'total_downloads'
     );
 
-    public function seed()
+    public function seedReal()
     {
-        return $this->hasOne(Seed::class, 'id');
+        return $this->hasOne(Seed::class, 'id', 'seed');
     }
 
-    public function game()
+    public function gameReal()
     {
-        return $this->hasOne(Game::class, 'id');
+        return $this->hasOne(Game::class, 'id', 'game');
     }
 
     public function uniqueIds()

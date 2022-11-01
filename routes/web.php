@@ -43,8 +43,7 @@ Route::get('/', function (ServerRequestInterface $request) {;
 })->middleware(['auth0.authenticate.optional']);
 
 Route::get('/retrieve', function(ServerRequestInterface $request) {
-    $mods = Mod::all(Mod::$columns);
-
+    $mods = Mod::with('seedReal')->with('gameReal')->get();
     $json = array('data' => array());
     
     // We have to format it for DataTables.
@@ -53,10 +52,10 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
         // Firstly, decide the image.
         $img = 'mods/default.png';
 
-        if (!empty($mod->seed->image))
+        if (!empty($mod->seedReal->image))
         {
             // Get filename and extension.
-            $parts = explode(".", $mod->seed->image, 2);
+            $parts = explode(".", $mod->seedReal->image, 2);
 
             if (is_array($parts) && count($parts) > 1)
             {
@@ -69,7 +68,7 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
             $img = 'mods/' . $mod->image;
         }
 
-        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->game->name) ? $mod->game->name : '', isset($mod->seed->name) ? $mod->seed->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seed->url) ? $mod->seed->url : '', $mod->custom_url, '', isset($mod->game->image) ? $mod->game->image : '', isset($mod->seed->image) ? $mod->seed->image : '');
+        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->gameReal->name) ? $mod->gameReal->name : '', isset($mod->seedReal->name) ? $mod->seedReal->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seedReal->url) ? $mod->seedReal->url : '', $mod->custom_url, '', isset($mod->gameReal->image) ? $mod->gameReal->image : '', isset($mod->seedReal->image) ? $mod->seedReal->image : '');
     }
 
     return json_encode($json);
