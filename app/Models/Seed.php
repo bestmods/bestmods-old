@@ -13,6 +13,14 @@ class Seed extends Model
     public $incrementing = true;
     public $timestamps = false;
 
+    protected $fillable = array
+    (
+        'name',
+        'protocol', 
+        'url',
+        'image'
+    );
+
     public function uniqueIds()
     {
         return array('url');

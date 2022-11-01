@@ -18,7 +18,7 @@ $(document).ready(function ()
         ajax: "/retrieve",
         "columnDefs": [
             {
-                targets: [0, 7, 8, 9, 10, 11, 13, 14],
+                targets: [0, 7, 8, 9, 10, 11, 13, 14, 15],
                 visible: false
             },
             {
@@ -61,7 +61,14 @@ $(document).ready(function ()
             {
                 targets: 5,
                 "render": function ( data, type, row, meta ) {
-                    return '<div class="card-seed"><img class="card-icon" src="/images/seeds/' + row[14] + '" alt="Icon" /> <a href="' + row[10] + '" class="hover:underline" target="_blank">' + data + '</a></div>';
+                    var link = row[10];
+
+                    if (!link.includes(row[15]))
+                    {
+                        link = row[15] + link;
+                    }
+
+                    return '<div class="card-seed"><img class="card-icon" src="/images/seeds/' + row[14] + '" alt="Icon" /> <a href="' + link + '" class="hover:underline" target="_blank">' + data + '</a></div>';
                     }
             },
             {
@@ -115,6 +122,52 @@ $(document).ready(function ()
         reloadContent(view);
     });
 
+    $(document).on('click', '.itemBtn', function(e)
+    {
+        var tar = $(e.currentTarget);
+        var view = tar.attr('data-show-id');
+
+        var new_url = main_url + '/' + view;
+
+        window.location.href = new_url;
+    });
+
+    var dl_idx = 1;
+
+    $(document).on('click', '#downloadsBtn', function(e)
+    {
+        // Increase index now.
+        dl_idx++;
+
+        // Add more inputs using download index.
+        var nameHtml = '<label class="block text-gray-200 text-sm font-bold mt-4 mb-2" for="download-' + dl_idx  +'-name">Name</label><input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-' + dl_idx  +'-name" name="download-' + dl_idx  +'-name" type="text" placeholder="Display name of file." />';
+
+        var urlHtml = '<label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="download-' + dl_idx  +'-url">URL</label><input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-' + dl_idx  +'-url" name="download-' + dl_idx  +'-url" type="text" placeholder="URL of file." />';
+
+        // Append both to existing HTML.
+        var elem = $('#downloads');
+        var existHtml = elem.html();
+
+        elem.html(existHtml + nameHtml + urlHtml);
+    });
+
+    var ss_idx = 1;
+
+    $(document).on('click', '#screenshotsBtn', function(e)
+    {
+        // Increase index now.
+        ss_idx++;
+
+        // Add more inputs using download index.
+        var urlHtml = '<label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="screenshot-' + ss_idx  +'-url">URL</label><input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="screenshot-' + ss_idx  +'-url" name="screenshot-' + ss_idx  +'-url" type="text" placeholder="URL to screenshot." />';
+
+        // Append to existing HTML.
+        var elem = $('#screenshots');
+        var existHtml = elem.html();
+
+        elem.html(existHtml + urlHtml);
+    });
+
     function reloadContent(view='overview')
     {
         $('[data-view]').each(function(idx)
@@ -129,16 +182,23 @@ $(document).ready(function ()
 
         $('[data-view-btn]').each(function(idx)
         {
+
+            $(this).removeClass('bg-gray-500');
+            $(this).removeClass('bg-gray-900');
+
             if ($(this).attr('data-show-id') == view)
             {
-                $(this).addClass("viewSel");
+                $(this).addClass("bg-gray-500");
             }
             else
             {
-                $(this).removeClass('viewSel');
+                $(this).addClass("bg-gray-900");
             }
         });
     }
 
-    reloadContent(curView);
+    if ($('#modContent').length)
+    {
+        reloadContent(curView);
+    }
 });

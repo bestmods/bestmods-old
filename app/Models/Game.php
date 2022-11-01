@@ -21,6 +21,13 @@ class Game extends Model
         'image'
     );
 
+    protected $fillable = array
+    (
+        'name',
+        'name_short', 
+        'image'
+    );
+
     public function mod()
     {
         return $this->belongsToMany(Mod::class, 'game');

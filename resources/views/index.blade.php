@@ -17,6 +17,7 @@
             <th>Buttons</th>
             <th>Game Image</th>
             <th>Seed Image</th>
+            <th>Seed Protocol</th>
         </thead>
     </table>
 </div>

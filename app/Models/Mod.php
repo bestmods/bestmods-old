@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mod extends Model
 {
-    const CREATED_AT = 'creation_at';
+    const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
     protected $connection = 'mysql';
@@ -38,6 +38,8 @@ class Mod extends Model
     protected $fillable = array
     (
         'name',
+        'seed',
+        'game',
         'description', 
         'description_short',
         'install_help',
