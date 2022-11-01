@@ -38,6 +38,11 @@
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image Name</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="text" placeholder="Image Name"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
             </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="classes">Classes</label>
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="classes" name="classes" type="text" placeholder="CSS Classes"{{!! isset($classes) ? ' value="' . $classes . '"' : '' !!}} />
+            </div>
             @elseif (isset($type) && $type == 'seed')
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="name">Name</label>
@@ -58,13 +63,18 @@
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image Name</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="text" placeholder="Image Name"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
             </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="classes">Classes</label>
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="classes" name="classes" type="text" placeholder="CSS Classes"{{!! isset($classes) ? ' value="' . $classes . '"' : '' !!}} />
+            </div>
             @else
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="seed">Seed</label>
                 <select class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="seed" name="seed" >
                     @if (isset($seeds))
                         @foreach ($seeds as $seed)
-                            <option value="{{ $seed->id }}"{{ (isset($curSeed) && $curSeed == $seed) ? ' selected' : '' }}>{{!! $seed->name !!}}</option>
+                            <option value="{{ $seed->id }}"{{ (isset($seedReal) && $seedReal->id == $seed->id) ? ' selected' : '' }}>{{ $seed->name }}</option>
                         @endforeach
                     @endif
                 </select>
@@ -75,7 +85,7 @@
                 <select class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="game" name="game">
                     @if (isset($games))
                         @foreach ($games as $game)
-                            <option value="{{ $game->id }}"{{ (isset($curGame) && $curGame == $seed) ? ' selected' : '' }}>{{!! $game->name !!}}</option>
+                            <option value="{{ $game->id }}"{{ (isset($gameReal) && $gameReal->id == $game->id) ? ' selected' : '' }}>{{ $game->name }}</option>
                         @endforeach
                     @endif
                 </select>
@@ -138,7 +148,7 @@
             </div>
             @endif
 
-            <button type="submit" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">Add!</button>
+            <button type="submit" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">{{ isset($id) ? 'Edit!' : 'Add!' }}</button>
         </form>
     </div>
 </div>

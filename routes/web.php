@@ -69,7 +69,7 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
             $img = 'mods/' . $mod->image;
         }
 
-        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->gameReal->name) ? $mod->gameReal->name : '', isset($mod->seedReal->name) ? $mod->seedReal->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seedReal->url) ? $mod->seedReal->url : '', $mod->custom_url, '', isset($mod->gameReal->image) ? $mod->gameReal->image : '', isset($mod->seedReal->image) ? $mod->seedReal->image : '', isset($mod->seedReal->protocol) ? $mod->seedReal->protocol : 'https');
+        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->gameReal->name) ? $mod->gameReal->name : '', isset($mod->seedReal->name) ? $mod->seedReal->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seedReal->url) ? $mod->seedReal->url : '', $mod->custom_url, '', isset($mod->gameReal->image) ? $mod->gameReal->image : '', isset($mod->seedReal->image) ? $mod->seedReal->image : '', isset($mod->seedReal->protocol) ? $mod->seedReal->protocol : 'https', isset($mod->seedReal->classes) ? $mod->seedReal->classes : '', isset($mod->gameReal->classes) ? $mod->gameReal->classes : '');
     }
 
     return json_encode($json);
@@ -85,14 +85,16 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     }
 
     // Assume we're firstly loading based off of custom URL.
-    $mod = Mod::where('custom_url', $mod)->get(Mod::$columns)->first();
+    $mod = Mod::with('seedReal')->with('gameReal')->where('custom_url', $mod)->get()->first();
 
     // If we're invalid, try searching by ID.
-    $mod = ($mod->exists) ? $mod : Mod::where('id', intval($mod));
+    $mod = ($mod->exists) ? $mod : Mod::with('seedReal')->with('gameReal')->where('id', intval($mod));
 
     $icon = null;
     $type = null;
     $id = null;
+    $gameReal = null;
+    $seedReal = null;
     $name = null;
     $name_short = null;
     $image = null;
@@ -104,6 +106,9 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     $install_help = null;
     $downloads = null;
     $screenshots = null;
+    $games = null;
+    $seeds = null;
+    $classes = null;
 
     // If we're in edit mode, fill out needed variables.
     if ($view == 'edit')
@@ -118,8 +123,17 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         $description = $mod->description;
         $description_short = $mod->description_short;
         $install_help = $mod->install_help;
+
+        $downloads = array();
+        $screenshots = array();
+
+        $gameReal = $mod->gameReal;
+        $seedReal = $mod->seedReal;
+
+        $games = Game::all();
+        $seeds = Seed::all();
         
-        $dls = json_decode($mod->downloads);
+        $dls = json_decode($mod->downloads, true);
 
         if ($dls && is_array($dls))
         {
@@ -129,7 +143,7 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
             }
         }
 
-        $SSs = json_decode($mod->downloads);
+        $SSs = json_decode($mod->screenshots);
 
         if ($SSs && is_array($SSs))
         {
@@ -163,6 +177,42 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
             $image = 'mods/' . $mod->image;
         }
 
+        // Parse screenshots.
+        $screenshots = json_decode($mod->screenshots, true);
+    
+        // Loop through each and replace with index.
+        if (is_array($screenshots))
+        {
+            $i = 1;
+    
+            foreach ($screenshots as $screenshot)
+            {
+                $html = '<img class="modScreenshot" src="' . $screenshot . '" alt="screenshot" />';
+    
+                // Replace instances in description and install.
+                $description = str_replace('{' . $i . '}',  $html, $description);
+                $install_help = str_replace('{' . $i . '}',  $html, $install_help);
+            }
+        }   
+    
+        // Parse downloads.
+        $downloads = json_decode($mod->downloads, true);
+    
+        // Loop through each and replace with index.
+        if (is_array($downloads))
+        {
+            $i = 1;
+    
+            foreach ($downloads as $download)
+            {
+                $html = '<a class="modDownload" href="' . $download['url'] . '" target="_blank">' . $download['name'] . '</a>';
+    
+                // Replace instances in description and install.
+                $description = str_replace('{' . $i . '}',  $html, $description);
+                $install_help = str_replace('{' . $i . '}',  $html, $install_help);
+            }
+        }    
+
         $icon = 'bestmods-icon.png';
 
         $key = 'mod_desc.'.$mod->id;
@@ -176,24 +226,6 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         $install_help =  Cache::remember($key, 8640, function () use ($mod) {
             return new HtmlString(Markdown::parse($mod->install_help));
         });
-    
-        // Parse downloads.
-        $downloads = json_decode($mod->downloads, true);
-    
-        // Loop through each and replace with index.
-        if (is_array($downloads))
-        {
-            $i = 1;
-    
-            foreach ($downloads as $download)
-            {
-                $html = '<a class="modDownload" href="' . $download->url . '" target="_blank">' . $download->name . '</a>';
-    
-                // Replace instances in description and install.
-                $description = str_replace('{' + $i + '}',  $html, $description);
-                $install_help = str_replace('{' + $i + '}',  $html, $install_help);
-            }
-        }    
     }
 
     $base_url = Url::to('/view', array('mod' => $mod->custom_url));
@@ -211,7 +243,7 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         'url' => Url::to('/view', array('mod' => $mod->custom_url, 'view' => $view))
     );
 
-    return view('global', ['page' => 'view', 'mod' => $mod, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url, 'type' => $type,'id' => $id, 'name' => $name, 'name_short' => $name_short, 'image' => $image, 'protocol' => $protocol, 'url' => $url, 'custom_url' => $custom_url, 'description' => $description, 'install_help' => $install_help, 'description_short' => $description_short, 'downloads' => $downloads, 'screenshots' => $screenshots]);
+    return view('global', ['page' => 'view', 'mod' => $mod, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url, 'type' => $type,'id' => $id, 'name' => $name, 'name_short' => $name_short, 'image' => $image, 'protocol' => $protocol, 'url' => $url, 'custom_url' => $custom_url, 'description' => $description, 'install_help' => $install_help, 'description_short' => $description_short, 'downloads' => $downloads, 'screenshots' => $screenshots, 'games' => $games, 'seeds' => $seeds, 'gameReal' => $gameReal, 'seedReal' => $seedReal, 'classes' => $classes]);
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
@@ -301,6 +333,10 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
             }
             else
             {
+                unset($info['rating']);
+                unset($info['total_downloads']);
+                unset($info['total_views']);
+
                 // Retrieve and update if exists.
                 $mod = Mod::where('id', $id)->get()->first();
 
@@ -317,11 +353,14 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
             $protocol = isset($post_data['protocol']) ? $post_data['protocol'] : 'https';
             $url = isset($post_data['url']) ? $post_data['url'] : 'moddingcommunity.com';
             $image = isset($post_data['image']) ? $post_data['image'] : '';
+            $classes = isset($post_data['classes']) ? $post_data['classes'] : '';
+
             $info = [
                 'name' => $name,
                 'protocol' => $protocol,
                 'url' => $url,
-                'image' => $image
+                'image' => $image,
+                'classes' => $classes
             ];
 
             // Create or update.
@@ -347,10 +386,13 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
             $name = isset($post_data['name']) ? $post_data['name'] : 'Game Name';
             $name_short = isset($post_data['name_short']) ? $post_data['name_short'] : 'Game Name Short';
             $image = isset($post_data['image']) ? $post_data['image'] : '';
+            $classes = isset($post_data['classes']) ? $post_data['classes'] : '';
+
             $info = [
                 'name' => $name,
                 'name_short' => $name_short,
-                'image' => $image
+                'image' => $image,
+                'classes' => $classes
             ];
 
             // Create or update.

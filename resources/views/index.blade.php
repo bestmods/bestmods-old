@@ -18,6 +18,8 @@
             <th>Game Image</th>
             <th>Seed Image</th>
             <th>Seed Protocol</th>
+            <th>Seed Classes</th>
+            <th>Game Classes</th>
         </thead>
     </table>
 </div>

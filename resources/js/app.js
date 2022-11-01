@@ -16,9 +16,31 @@ $(document).ready(function ()
     var table = $('#mods').DataTable({
         dom: 'rt',
         ajax: "/retrieve",
+        createdRow: function (row, data, dataIndex) 
+        {
+            if (row[16])
+            {
+                var classes = row[16].split(" ");
+
+                for (var i = 0; i < classes.length; i++)
+                {
+                    $(row).addClass(classes[i]);
+                }
+            }
+
+            if (row[17])
+            {
+                var classes = row[17].split(" ");
+
+                for (var i = 0; i < classes.length; i++)
+                {
+                    $(row).addClass(classes[i]);
+                }
+            }
+        },
         "columnDefs": [
             {
-                targets: [0, 7, 8, 9, 10, 11, 13, 14, 15],
+                targets: [0, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17],
                 visible: false
             },
             {
@@ -146,9 +168,8 @@ $(document).ready(function ()
 
         // Append both to existing HTML.
         var elem = $('#downloads');
-        var existHtml = elem.html();
 
-        elem.html(existHtml + nameHtml + urlHtml);
+        elem.append(nameHtml + urlHtml);
     });
 
     var ss_idx = 1;
@@ -163,9 +184,8 @@ $(document).ready(function ()
 
         // Append to existing HTML.
         var elem = $('#screenshots');
-        var existHtml = elem.html();
 
-        elem.html(existHtml + urlHtml);
+        elem.append(urlHtml);
     });
 
     function reloadContent(view='overview')

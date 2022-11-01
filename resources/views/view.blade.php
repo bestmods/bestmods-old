@@ -36,7 +36,7 @@
                         <p>
                             @if (isset($downloads) && is_array($downloads) && count($downloads) > 0)
                                 @foreach ($downloads as $download)
-                                    <a class="modDownload" href="{{ $download->url }}" target="_blank">{{ $download->name }}</a>
+                                    <a class="modDownload" href="{{ $download['url'] }}" target="_blank">{{ $download['name'] }}</a>
                                 @endforeach
                             @else
                                 No downloads found.

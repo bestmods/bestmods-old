@@ -8,9 +8,8 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('mods', function (Blueprint $table) {
-            $table->foreignId('seed')->change();
-            $table->foreignId('game')->change();
+        Schema::table('games', function (Blueprint $table) {
+            $table->string('classes', 255);
         });
     }
 

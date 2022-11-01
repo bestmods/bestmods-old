@@ -18,7 +18,8 @@ class Seed extends Model
         'name',
         'protocol', 
         'url',
-        'image'
+        'image',
+        'classes'
     );
 
     public function uniqueIds()
