@@ -177,9 +177,23 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
             $image = 'mods/' . $mod->image;
         }
 
+        $icon = 'bestmods-icon.png';
+
+        $key = 'mod_desc.'.$mod->id;
+
+        $description = Cache::remember($key, 8640, function () use ($mod)  {
+            return $mod->description;
+        });
+    
+        $key = 'mod_install.'.$mod->id;
+    
+        $install_help =  Cache::remember($key, 8640, function () use ($mod) {
+            return $mod->install_help;
+        });
+
         // Parse screenshots.
         $screenshots = json_decode($mod->screenshots, true);
-    
+        
         // Loop through each and replace with index.
         if (is_array($screenshots))
         {
@@ -197,35 +211,24 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     
         // Parse downloads.
         $downloads = json_decode($mod->downloads, true);
-    
+   
         // Loop through each and replace with index.
         if (is_array($downloads))
         {
-            $i = 1;
-    
-            foreach ($downloads as $download)
-            {
-                $html = '<a class="modDownload" href="' . $download['url'] . '" target="_blank">' . $download['name'] . '</a>';
-    
-                // Replace instances in description and install.
-                $description = str_replace('{' . $i . '}',  $html, $description);
-                $install_help = str_replace('{' . $i . '}',  $html, $install_help);
-            }
-        }    
+           $i = 1;
+   
+           foreach ($downloads as $download)
+           {
+               $html = '<a class="modDownload" href="' . $download['url'] . '" target="_blank">' . $download['name'] . '</a>';
+   
+               // Replace instances in description and install.
+               $description = str_replace('{' . $i . '}',  $html, $description);
+               $install_help = str_replace('{' . $i . '}',  $html, $install_help);
+           }
+        }
 
-        $icon = 'bestmods-icon.png';
-
-        $key = 'mod_desc.'.$mod->id;
-
-        $description = Cache::remember($key, 8640, function () use ($mod)  {
-            return new HtmlString(Markdown::parse($mod->description));
-        });
-    
-        $key = 'mod_install.'.$mod->id;
-    
-        $install_help =  Cache::remember($key, 8640, function () use ($mod) {
-            return new HtmlString(Markdown::parse($mod->install_help));
-        });
+        $description = new HtmlString(Markdown::parse($description));
+        $install_help = new HtmlString(Markdown::parse($install_help));
     }
 
     $base_url = Url::to('/view', array('mod' => $mod->custom_url));
@@ -247,8 +250,6 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
-    $user = Auth::user();
-
     // Check if we're inserting.
     $post_data = $request->getParsedBody();
     $item_created = false;
@@ -431,7 +432,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
     $seeds = Seed::all();
 
     return view('global', ['page' => 'create', 'headinfo' => $headinfo, 'base_url' => $base_url, 'games' => $games, 'seeds' => $seeds, 'type' => $type, 'item_created' => $item_created]);
-})->middleware('auth0.authenticate:mods:create');
+})->middleware(['auth0.authenticate']);
 
 /* Auth0 (Authentication) */
 Route::get('/login', \Auth0\Laravel\Http\Controller\Stateful\Login::class)->name('login');
