@@ -40,9 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
         'auth0' => [
             'driver' => 'auth0',
-            'provider' => 'auth0',
+            'provider' => 'usersauth0',
         ]
     ],
 
@@ -69,7 +70,7 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'auth0' => [
+        'usersauth0' => [
             'driver' => 'auth0',
             'repository' => \Auth0\Laravel\Auth\User\Repository::class
         ]

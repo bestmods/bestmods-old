@@ -236,7 +236,7 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     $headinfo = array
     (
         'title' => $mod->name . ' - Best Mods',
-        'robots' => 'noindex, nofollow',
+        'robots' => 'index, nofollow',
         'type' => 'article',
         'image' => Url::to('/images/' . $image),
         'icon' => Url::to('/images' . $icon),
@@ -423,7 +423,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
     $headinfo = array
     (
         'title' => 'Submit - Best Mods',
-        'robots' => 'noindex, nofollow',
+        'robots' => 'index, nofollow',
         'type' => 'article',
         'url' => $base_url . '/' . $type
     );
