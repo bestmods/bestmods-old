@@ -86,7 +86,7 @@ $(document).ready(function ()
 
                     if (!link.includes(row[15]))
                     {
-                        link = row[15] + link;
+                        link = row[15] + "://" +  link;
                     }
 
                     return '<div class="card-seed"><img class="card-icon" src="/images/seeds/' + row[14] + '" alt="Icon" /> <a href="' + link + '" class="hover:underline" target="_blank">' + data + '</a></div>';
@@ -108,7 +108,14 @@ $(document).ready(function ()
                         link = row[11];
                     }
 
-                    return '<div class="flex flex-col text-center"><a href="/view/' + link + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">View</a> <a href="' + row[10] + '/' + row[9] + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2" target="_blank">Original</a></div>';
+                    var orig_link = row[10];
+
+                    if (!orig_link.includes(row[15]))
+                    {
+                        orig_link = row[15] + "://" + orig_link;
+                    }
+
+                    return '<div class="flex flex-col text-center"><a href="/view/' + link + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">View</a> <a href="' + orig_link + '/' + row[9] + '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2" target="_blank">Original</a></div>';
                     }
             }
         ]

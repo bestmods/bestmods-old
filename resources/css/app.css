@@ -76,11 +76,6 @@
     justify-content: space-between;
 }
 
-.card-icon-div
-{
-
-}
-
 .card-icon
 {
     width: 24px;
@@ -194,12 +189,60 @@ tbody tr
     flex-grow: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
+#viewContent > strong
+{
+    font-weight: bold;
+}
+
+#viewContent h1, #viewContent h2, #viewContent h3, #viewContent h4, #viewContent h5, #viewContent h6
+{
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+#viewContent pre
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#viewContent code
+{
+    padding: 0.10em;
+    margin: 3px;
+    background: #00585180;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+#viewContent pre code
+{
+    padding: 0 !important;
+    margin: 0px !important;
+    background: none !important;
+    border-radius: none !important;
+}
+
+#viewContent h1
+{
+    font-size: 1.75em;
+    line-height: 1.65;
+}
+
+#viewContent h2
+{
+    font-size: 1.55em;
+    line-height: 1.45;
+}
+
+#viewContent h3
+{
+    font-size: 1.35em;
+    line-height: 1.25;
+}
+
+#viewContent h4
+{
+    font-size: 1.00em;
+    line-height: 0.90;
 }
