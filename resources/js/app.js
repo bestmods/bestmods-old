@@ -5,7 +5,6 @@ import '../css/app.css';
 
 import setup from 'datatables.net-dt'
 import 'datatables.net-scroller-dt';
-window.DataTable = setup(window, $)
 
 import '../css/datatables.min.css';
 
