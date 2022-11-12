@@ -43,19 +43,22 @@
     padding: 20px;
 }
 
-.card thead {
-	display: none;
+.card thead 
+{
+    display: none;
 }
 
-.card tbody tr {
+.card tbody tr 
+{
     max-width: 25em;
-	margin: 0.5em;
-	border: none;
-	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.5) !important;
-	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+    margin: 0.5em;
+    border: none;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
 }
-.card tbody tr td {
+.card tbody tr td 
+{
 	display: block;
 	border: 0;
 }
@@ -105,9 +108,9 @@
 
 .boxView
 {
-	border-radius: 0px 0px 5px 5px;
-	background-color: rgba(0, 0, 0, 0.5) !important;
-	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 5px 5px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
 }
 
 .hiddenView
