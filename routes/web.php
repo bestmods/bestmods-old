@@ -250,6 +250,8 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
+    return '';
+    
     // Check if we're inserting.
     $post_data = $request->getParsedBody();
     $item_created = false;
