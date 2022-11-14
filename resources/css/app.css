@@ -70,6 +70,7 @@
 
 .card-image
 {
+    height: 224px;
     border-radius: 15px 15px 0px 0px;
 }
 
