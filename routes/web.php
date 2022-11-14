@@ -31,6 +31,10 @@ Route::get('/', function (ServerRequestInterface $request) {;
     $img = '/images/bestmods-filled.png';
     $icon = '/images/bestmods-icon.png';
 
+    $user = Auth::user();
+
+    return print_r($user, true);
+
     $base_url = Url::to('/');
 
     $headinfo = array
@@ -250,8 +254,6 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
-    return '';
-    
     // Check if we're inserting.
     $post_data = $request->getParsedBody();
     $item_created = false;
@@ -438,5 +440,8 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
 
 /* Auth0 (Authentication) */
 Route::get('/login', \Auth0\Laravel\Http\Controller\Stateful\Login::class)->name('login');
-Route::get('/logout', \Auth0\Laravel\Http\Controller\Stateful\Logout::class)->name('logout');
 Route::get('/auth0/callback', \Auth0\Laravel\Http\Controller\Stateful\Callback::class)->name('auth0.callback');
+Route::get('/logout', \Auth0\Laravel\Http\Controller\Stateful\Logout::class)->name('logout');
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
