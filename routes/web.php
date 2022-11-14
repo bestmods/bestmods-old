@@ -58,9 +58,9 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
         // Firstly, decide the image.
         $img = asset('images/default_mod.png');
 
-        if (!empty($mod->seedReal->image))
+        if (!empty($mod->seedReal->image_banner))
         {
-            $img = asset('storage/images/seeds/' . $mod->seedReal->image);
+            $img = asset('storage/images/seeds/' . $mod->seedReal->image_banner);
         }
 
         if (!empty($mod->image))
@@ -160,9 +160,9 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         // Firstly, decide the image.
         $image = asset('images/default_mod.png');
 
-        if (!empty($mod->seedReal->image))
+        if (!empty($mod->seedReal->image_banner))
         {
-            $image = asset('storage/images/seeds/' . $mod->seedReal->image);
+            $image = asset('storage/images/seeds/' . $mod->seedReal->image_banner);
         }
 
         if (!empty($mod->image))
@@ -384,6 +384,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 'protocol' => $protocol,
                 'url' => $url,
                 'image' => '',
+                'image_banner' => '',
                 'classes' => ($classes) ? $classes : ''
             ];
 
@@ -427,8 +428,11 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 $ext = $image_banner->clientExtension();
 
                 $imgName = strtolower($seed->url) . '_full.' . $ext;
+                $seed->image_banner = $imgName;
                 
                 $image_banner->storePubliclyAs('images/seeds', $imgName, 'public');
+
+                $seed->save();
             }
         }
         else

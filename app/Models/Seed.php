@@ -19,6 +19,7 @@ class Seed extends Model
         'protocol', 
         'url',
         'image',
+        'image_banner',
         'classes'
     );
 
