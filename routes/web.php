@@ -442,6 +442,3 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
 Route::get('/login', \Auth0\Laravel\Http\Controller\Stateful\Login::class)->name('login');
 Route::get('/auth0/callback', \Auth0\Laravel\Http\Controller\Stateful\Callback::class)->name('auth0.callback');
 Route::get('/logout', \Auth0\Laravel\Http\Controller\Stateful\Logout::class)->name('logout');
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

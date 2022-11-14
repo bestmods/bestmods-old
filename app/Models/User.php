@@ -19,7 +19,7 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authorizable, 
     use Authenticatable;
     use HasRoles;
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'uid';
 
     protected $guard_name = 'auth0';
 
@@ -27,6 +27,7 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authorizable, 
     protected $casts = [];
     protected $fillable = 
     [
+        'uid',
         'id',
         'name',
         'email',
