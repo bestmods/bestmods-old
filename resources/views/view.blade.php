@@ -9,7 +9,7 @@
             @else
             <div id="modHeader">
                 <div id="modImage" class="flex justify-center">
-                    <img class="rounded-t max-w-md md:max-w-3xl" src="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/mods/default.png') }}" />
+                    <img class="rounded-t max-w-md md:max-w-3xl" src="{{ isset($headinfo['image']) ? $headinfo['image'] : Illuminate\Support\Facades\URL::to('/images/default_mod.png') }}" />
                 </div>
                 <div id="modName" class="flex justify-center">
                     <h1 class="text-4xl font-bold mb-4">{{ $mod->name }}</h1>

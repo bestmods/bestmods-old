@@ -46,11 +46,11 @@ $(document).ready(function ()
                 targets: 1,
                 "className": "card-image-td",
                 "render": function ( data, type, row, meta ) {
-                    var image = '/images/mods/default.png';
+                    var image = '/images/default_mod.png';
 
                     if (row[1].length)
                     {
-                        image = '/images/' + row[1];
+                        image = row[1];
                     }
 
                     return '<img class="card-image" src="' + image + '" alt="Mod Image"></img>';
@@ -76,7 +76,7 @@ $(document).ready(function ()
             {
                 targets: 4,
                 "render": function ( data, type, row, meta ) {
-                    return '<div class="card-seed"><img class="card-icon" src="/images/games/' + row[13] + '" alt="Icon" /> ' + data + '</div>';
+                    return '<div class="card-seed"><img class="card-icon" src="' + row[13] + '" alt="Icon" /> ' + data + '</div>';
                     }
             },
             {
@@ -89,7 +89,7 @@ $(document).ready(function ()
                         link = row[15] + "://" +  link;
                     }
 
-                    return '<div class="card-seed"><img class="card-icon" src="/images/seeds/' + row[14] + '" alt="Icon" /> <a href="' + link + '" class="hover:underline" target="_blank">' + data + '</a></div>';
+                    return '<div class="card-seed"><img class="card-icon" src="' + row[14] + '" alt="Icon" /> <a href="' + link + '" class="hover:underline" target="_blank">' + data + '</a></div>';
                     }
             },
             {

@@ -17,6 +17,10 @@ use App\Models\Mod;
 
 use App\Models\User;
 
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,25 +56,19 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
     foreach ($mods as $mod)
     {
         // Firstly, decide the image.
-        $img = 'mods/default.png';
+        $img = asset('images/default_mod.png');
 
         if (!empty($mod->seedReal->image))
         {
-            // Get filename and extension.
-            $parts = explode(".", $mod->seedReal->image, 2);
-
-            if (is_array($parts) && count($parts) > 1)
-            {
-                $img = 'seeds/' . $parts[0] . '_full.' . $parts[1];
-            }
+            $img = asset('storage/images/seeds/' . $mod->seedReal->image);
         }
 
         if (!empty($mod->image))
         {
-            $img = 'mods/' . $mod->image;
+            $img = asset('storage/images/mods/' . $mod->image);
         }
 
-        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->gameReal->name) ? $mod->gameReal->name : '', isset($mod->seedReal->name) ? $mod->seedReal->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seedReal->url) ? $mod->seedReal->url : '', $mod->custom_url, '', isset($mod->gameReal->image) ? $mod->gameReal->image : '', isset($mod->seedReal->image) ? $mod->seedReal->image : '', isset($mod->seedReal->protocol) ? $mod->seedReal->protocol : 'https', isset($mod->seedReal->classes) ? $mod->seedReal->classes : '', isset($mod->gameReal->classes) ? $mod->gameReal->classes : '');
+        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->gameReal->name) ? $mod->gameReal->name : '', isset($mod->seedReal->name) ? $mod->seedReal->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seedReal->url) ? $mod->seedReal->url : '', $mod->custom_url, '', isset($mod->gameReal->image) ? asset('storage/images/games/' . $mod->gameReal->image) : '', isset($mod->seedReal->image) ? asset('storage/images/seeds/' . $mod->seedReal->image) : '', isset($mod->seedReal->protocol) ? $mod->seedReal->protocol : 'https', isset($mod->seedReal->classes) ? $mod->seedReal->classes : '', isset($mod->gameReal->classes) ? $mod->gameReal->classes : '');
     }
 
     return json_encode($json);
@@ -91,14 +89,14 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     // If we're invalid, try searching by ID.
     $mod = ($mod->exists) ? $mod : Mod::with('seedReal')->with('gameReal')->where('id', intval($mod));
 
-    $icon = null;
     $type = null;
     $id = null;
     $gameReal = null;
     $seedReal = null;
+    $image = null;
+    $icon = null;
     $name = null;
     $name_short = null;
-    $image = null;
     $protocol = null;
     $url = null;
     $custom_url = null;
@@ -160,22 +158,16 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         $mod->update(array('total_views' => $mod->total_views + 1));
 
         // Firstly, decide the image.
-        $image = 'mods/default.png';
+        $image = asset('images/default_mod.png');
 
-        if (!empty($mod->seed->image))
+        if (!empty($mod->seedReal->image))
         {
-            // Get filename and extension.
-            $parts = explode(".", $mod->seed->image, 2);
-
-            if (is_array($parts) && count($parts) > 1)
-            {
-                $image = 'seeds/' . $parts[0] . '_full.' . $parts[1];
-            }
+            $image = asset('storage/images/seeds/' . $mod->seedReal->image);
         }
 
         if (!empty($mod->image))
         {
-            $image = 'mods/' . $mod->image;
+            $image = asset('storage/images/mods/' . $mod->image);
         }
 
         $icon = 'bestmods-icon.png';
@@ -239,7 +231,7 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         'title' => $mod->name . ' - Best Mods',
         'robots' => 'index, nofollow',
         'type' => 'article',
-        'image' => Url::to('/images/' . $image),
+        'image' => $image,
         'icon' => Url::to('/images' . $icon),
         'description' => $mod->description_short,
         'item1' => $mod->total_views,
@@ -250,7 +242,7 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     return view('global', ['page' => 'view', 'mod' => $mod, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url, 'type' => $type,'id' => $id, 'name' => $name, 'name_short' => $name_short, 'image' => $image, 'protocol' => $protocol, 'url' => $url, 'custom_url' => $custom_url, 'description' => $description, 'install_help' => $install_help, 'description_short' => $description_short, 'downloads' => $downloads, 'screenshots' => $screenshots, 'games' => $games, 'seeds' => $seeds, 'gameReal' => $gameReal, 'seedReal' => $seedReal, 'classes' => $classes]);
 })->middleware(['auth0.authenticate.optional']);
 
-Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
+Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $type='mod') {
     $auth0user = Auth::user();
     $db_user = User::find($auth0user->getAttribute('id'));
 
@@ -260,37 +252,38 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
         return 'NO PERMISSION';
     }
 
-    // Check if we're inserting.
-    $post_data = $request->getParsedBody();
     $item_created = false;
 
-    if (isset($post_data['type']))
+    $new_type = $request->get('type', null);
+
+    if ($new_type)
     {
-        $new_type = $post_data['type'];
-        $id = isset($post_data['id']) ? intval($post_data['id']) : -1;
+        $id = $request->get('id', -1);
+
+        $image = $request->file('image');
 
         // Handle Mod insert.
         if ($new_type == 'mod')
         {
-            
-            $seed = isset($post_data['seed']) ? intval($post_data['seed']) : 0;
-            $game = isset($post_data['game']) ? intval($post_data['game']) : 0;
+            $seed = $request->get('seed', 0);
+            $game = $request->get('game', 0);
 
-            $name = isset($post_data['name']) ? $post_data['name'] : 'Mod Name';
-            $url = isset($post_data['url']) ? $post_data['url'] : '';
-            $custom_url = isset($post_data['custom_url']) ? $post_data['custom_url'] : '';
-            $description = isset($post_data['description']) ? $post_data['description'] : '';
-            $description_short = isset($post_data['description_short']) ? $post_data['description_short'] : '';
-            $install_help = isset($post_data['install_help']) ? $post_data['install_help'] : '';
-            $image = isset($post_data['image']) ? $post_data['image'] : '';
+            $name = $request->get('name', '');
+            $url = $request->get('url', '');
+            $custom_url = $request->get('custom_url', '');
+            $description = $request->get('description', '');
+            $description_short = $request->get('description_short', '');
+            $install_help = $request->get('install_help', '');
 
             // Handle downloads (100 is max which should be enough, I hope, lol).
             $downloads = array();
 
             for ($i = 1; $i <= 100; $i++)
             {
+                $data = $request->get('download-' . $i . '-name');
+
                 // If we're not set, #break.
-                if (!isset($post_data['download-' . $i . '-name']) || !isset($post_data['download-' . $i . '-url']))
+                if (!$data)
                 {
                     break;
                 }
@@ -298,8 +291,8 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
                 // We must be set, so add onto downloads array.
                 $downloads[] = array
                 (
-                    'name' => $post_data['download-' . $i . '-name'],
-                    'url' => $post_data['download-' . $i . '-url'],
+                    'name' => $request->get('download-' . $i . '-name', 'Download'),
+                    'url' => $request->get('download-' . $i . '-url', null),
                 );
             }
 
@@ -308,14 +301,16 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
 
             for ($i = 1; $i <= 100; $i++)
             {
+                $data = $request->get('screenshot-' . $i . '-url', null);
+
                 // If we're not set, #break.
-                if (!isset($post_data['screenshot-' . $i . '-url']))
+                if (!$data)
                 {
                     break;
                 }
 
                 // We must be set, so add onto screenshots array.
-                $screenshots[] = $post_data['screenshot-' . $i . '-url'];
+                $screenshots[] = $data;
             }
 
             $info = [
@@ -328,7 +323,8 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
                 'description' => $description,
                 'description_short' => $description_short,
                 'install_help' => $install_help,
-                'image' => $image,
+
+                'image' => '',
 
                 'downloads' => json_encode($downloads),
                 'screenshots' => json_encode($screenshots),
@@ -337,11 +333,13 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
                 'total_downloads' => 0,
                 'total_views' => 0
             ];
+            
+            $mod = null;
 
             // Create or update.
             if ($id < 1)
             {
-                Mod::create($info);
+                $mod = Mod::create($info);
                 $item_created = true;
             }
             else
@@ -359,27 +357,45 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
                     $item_created = true;
                 }
             }
+
+            if ($image != null)
+            {
+                $ext = $image->clientExtension();
+
+                $imgName = $mod->id . '.' . $ext;
+                $mod->image = $imgName;
+                
+                $image->storePubliclyAs('images/mods', $imgName, 'public');
+                
+                $mod->save();
+            }
         }
         elseif ($new_type == 'seed')
         {
-            $name = isset($post_data['name']) ? $post_data['name'] : 'Seed Name';
-            $protocol = isset($post_data['protocol']) ? $post_data['protocol'] : 'https';
-            $url = isset($post_data['url']) ? $post_data['url'] : 'moddingcommunity.com';
-            $image = isset($post_data['image']) ? $post_data['image'] : '';
-            $classes = isset($post_data['classes']) ? $post_data['classes'] : '';
+            $name = $request->get('name', 'Seed');
+            $protocol = $request->get('protocol', 'https');
+            $url = $request->get('url', 'moddingcommunity.com');
+            $classes = $request->get('classes', '');
+
+            $image_banner = $request->file('image_banner');
 
             $info = [
                 'name' => $name,
                 'protocol' => $protocol,
                 'url' => $url,
-                'image' => $image,
-                'classes' => $classes
+                'image' => '',
+                'classes' => ($classes) ? $classes : ''
             ];
+
+            $seed = null;
 
             // Create or update.
             if ($id < 1)
             {
-                Seed::create($info);
+                $addInfo = $info;
+                array_splice($addInfo, 2, 1);
+
+                $seed = Seed::firstOrCreate(['url' => $url], $addInfo);
                 $item_created = true;
             }
             else
@@ -393,25 +409,50 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
                     $item_created = true;
                 }
             }
+
+            if ($image != null)
+            {
+                $ext = $image->clientExtension();
+
+                $imgName = strtolower($seed->url) . '.' . $ext;
+                $seed->image = $imgName;
+                
+                $image->storePubliclyAs('images/seeds', $imgName, 'public');
+                
+                $seed->save();
+            }
+
+            if ($image_banner != null)
+            {
+                $ext = $image_banner->clientExtension();
+
+                $imgName = strtolower($seed->url) . '_full.' . $ext;
+                
+                $image_banner->storePubliclyAs('images/seeds', $imgName, 'public');
+            }
         }
         else
         {
-            $name = isset($post_data['name']) ? $post_data['name'] : 'Game Name';
-            $name_short = isset($post_data['name_short']) ? $post_data['name_short'] : 'Game Name Short';
-            $image = isset($post_data['image']) ? $post_data['image'] : '';
-            $classes = isset($post_data['classes']) ? $post_data['classes'] : '';
+            $name = $request->get('name', 'Game');
+            $name_short = $request->get('name_short', 'Game Short');
+            $classes = $request->get('classes', '');
 
             $info = [
                 'name' => $name,
                 'name_short' => $name_short,
-                'image' => $image,
-                'classes' => $classes
+                'image' => '',
+                'classes' => ($classes) ? $classes : ''
             ];
+
+            $game = null;
 
             // Create or update.
             if ($id < 1)
             {
-                Game::create($info);
+                $addInfo = $info;
+                array_splice($addInfo, 1, 1);
+
+                $game = Game::firstOrCreate(['name_short' => $name_short], $addInfo);
                 $item_created = true;
             }
             else
@@ -424,6 +465,18 @@ Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterfac
                     $game->update($info);
                     $item_created = true;
                 }
+            }
+
+            if ($image != null)
+            {
+                $ext = $image->clientExtension();
+
+                $imgName = strtolower($game->name_short) . '.' . $ext;
+                $game->image = $imgName;
+                
+                $image->storePubliclyAs('images/games', $imgName, 'public');
+                
+                $game->save();
             }
         }
     }

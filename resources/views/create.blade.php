@@ -15,7 +15,7 @@
         <button data-view-btn data-show-id="seed" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ (isset($type) && $type == 'seed') ? 'bg-gray-500' : 'bg-gray-900' }}">Seed</button>
         <button data-view-btn data-show-id="game" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ (isset($type) && $type == 'game') ? 'bg-gray-500' : 'bg-gray-900' }}">Game</button>
         
-        <form method="POST" action="{{ Illuminate\Support\Facades\URL::to('/create', array('type' => 'mod')) }}" class="flex flex-col bg-black bg-opacity-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form method="POST" action="{{ Illuminate\Support\Facades\URL::to('/create', array('type' => 'mod')) }}" class="flex flex-col bg-black bg-opacity-50 shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype='multipart/form-data'>
             @csrf
 
             <input type="hidden" name="type" value="{{ isset($type) ? $type : 'mod' }}" />
@@ -25,6 +25,11 @@
 
             @if (isset($type) && $type == 'game')
             <div class="mb-4">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image</label>
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Game Image"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
+            </div>
+
+            <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="name">Name</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Game Name"{{!! isset($name) ? ' value="' . $name . '"' : '' !!}} />
             </div>
@@ -33,17 +38,22 @@
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="name_short">Name Short</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="name_short" name="name_short" type="text" placeholder="Short Game Name"{{!! isset($name_short) ? ' value="' . $name_short . '"' : '' !!}} />
             </div>
-
-            <div class="mb-4">
-                <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image Name</label>
-                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="text" placeholder="Image Name"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
-            </div>
             
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="classes">Classes</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="classes" name="classes" type="text" placeholder="CSS Classes"{{!! isset($classes) ? ' value="' . $classes . '"' : '' !!}} />
             </div>
             @elseif (isset($type) && $type == 'seed')
+            <div class="mb-4">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image</label>
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Seed Image"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="image_banner">Image Banner</label>
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image_banner" name="image_banner" type="file" placeholder="Seed Image Banner"{{!! isset($image_banner) ? ' value="' . $image_banner . '"' : '' !!}} />
+            </div>
+
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="name">Name</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Seed Name"{{ isset($name) ? ' value="' . $name . '"' : '' }} />
@@ -60,15 +70,15 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image Name</label>
-                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="text" placeholder="Image Name"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
-            </div>
-
-            <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="classes">Classes</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="classes" name="classes" type="text" placeholder="CSS Classes"{{!! isset($classes) ? ' value="' . $classes . '"' : '' !!}} />
             </div>
             @else
+            <div class="mb-4">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image</label>
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Mod Image"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
+            </div>
+
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="seed">Seed</label>
                 <select class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="seed" name="seed" >

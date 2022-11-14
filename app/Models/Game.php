@@ -18,14 +18,16 @@ class Game extends Model
         'id',
         'name',
         'name_short',
-        'image'
+        'image',
+        'classes'
     );
 
     protected $fillable = array
     (
         'name',
         'name_short', 
-        'image'
+        'image',
+        'classes'
     );
 
     public function mod()
