@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -30,10 +29,6 @@ use App\Models\Mod;
 Route::get('/', function (ServerRequestInterface $request) {;
     $img = '/images/bestmods-filled.png';
     $icon = '/images/bestmods-icon.png';
-
-    $user = Auth::user();
-
-    return print_r($user, true);
 
     $base_url = Url::to('/');
 
@@ -254,6 +249,14 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
+    $user = Auth::user();
+
+    // We'll use @can in the template in the future so it isn't just a blank page.
+    if (!$user || !in_array('Admin', $user->getRoles()))
+    {
+        return 'NO PERMISSION';
+    }
+
     // Check if we're inserting.
     $post_data = $request->getParsedBody();
     $item_created = false;
