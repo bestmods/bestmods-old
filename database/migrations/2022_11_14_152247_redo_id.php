@@ -9,7 +9,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unique('id');
+            $table->dropColumn('uid');
+            $table->dropUnique(['id']);
+            $table->primary('id');
         });
     }
 
