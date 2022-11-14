@@ -19,7 +19,8 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authorizable, 
     use Authenticatable;
     use HasRoles;
 
-    protected $primaryKey = 'uid';
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     protected $guard_name = 'auth0';
 
@@ -37,6 +38,6 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authorizable, 
 
     public function can($abilities, $arguments = [])
     {
-
+        return true;
     }
 }
