@@ -49,6 +49,9 @@ php artisan key:generate
 # Migrate database.
 php artisan migrate
 
+# Seed database.
+php artisan db:seed
+
 # Build CSS and JS files.
 npm run build
 
@@ -56,6 +59,9 @@ npm run build
 php artisan serve
 
 # For production, set debug to false in .env file and use a proper web server such as NGINX or Apache!
+
+# SETUP AUTH0 AND PUT INFO IN .env FILE.
+
 ```
 
 ## Community
