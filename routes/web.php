@@ -15,6 +15,8 @@ use App\Models\Seed;
 use App\Models\Game;
 use App\Models\Mod;
 
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -249,10 +251,11 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (ServerRequestInterface $request, $type='mod') {
-    $user = Auth::user();
+    $auth0user = Auth::user();
+    $db_user = User::find($auth0user->getAttribute('id'));
 
     // We'll use @can in the template in the future so it isn't just a blank page.
-    if (!$user || !in_array('Admin', $user->getRoles()))
+    if (!$db_user || !$db_user->hasRole('Admin'))
     {
         return 'NO PERMISSION';
     }
