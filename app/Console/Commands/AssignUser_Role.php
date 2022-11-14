@@ -15,6 +15,20 @@ class AssignUser_Role extends Command
 
     protected $description = 'Assigns a role to a user.';
 
+    function genRand($length = 10) 
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) 
+        {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+    }
+
     protected function write($msg)
     {
         // Yes, I know I could put this out of the function for better perf, but it's only a couple more executions!
@@ -37,17 +51,9 @@ class AssignUser_Role extends Command
             return Command::FAILURE;
         }
 
-        // Attempt to load user.
-        try
-        {
-            $user = User::findOrFail($user_id);
-        }
-        catch (ModelNotFoundException $e)
-        {
-            $this->write('User not found with ID `' . $user_id . '`');
+        // Load or create user.
 
-            return Command::FAILURE;
-        }
+        $user = User::firstOrCreate(['id' => $user_id], ['name' => 'N/A', 'email' => 'none' . $this->genRand(5) . '@bestmods.io']);
 
         // Assign role.
         $user->assignRole($role);
