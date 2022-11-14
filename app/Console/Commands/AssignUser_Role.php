@@ -52,7 +52,6 @@ class AssignUser_Role extends Command
         }
 
         // Load or create user.
-
         $user = User::firstOrCreate(['id' => $user_id], ['name' => 'N/A', 'email' => 'none' . $this->genRand(5) . '@bestmods.io']);
 
         // Assign role.

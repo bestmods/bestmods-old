@@ -34,8 +34,6 @@ class User extends \Illuminate\Database\Eloquent\Model implements Authorizable, 
         'email',
     ];
 
-    protected $roles = array();
-
     public function can($abilities, $arguments = [])
     {
         return true;
