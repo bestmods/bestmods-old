@@ -17,18 +17,18 @@ $(document).ready(function ()
         ajax: "/retrieve",
         createdRow: function (row, data, dataIndex) 
         {
-            if (data[16])
+            if (data[17])
             {
-                var classes = data[16].split(" ");
+                var classes = data[17].split(" ");
 
                 for (var i = 0; i < classes.length; i++)
                 {
                     $(row).addClass(classes[i]);
                 }
             }
-            else if (data[17])
+            else if (data[16])
             {
-                var classes = data[17].split(" ");
+                var classes = data[16].split(" ");
 
                 for (var i = 0; i < classes.length; i++)
                 {
