@@ -17,24 +17,27 @@ $(document).ready(function ()
         ajax: "/retrieve",
         createdRow: function (row, data, dataIndex) 
         {
-            if (row[16])
+            if (data[16])
             {
-                var classes = row[16].split(" ");
+                var classes = data[16].split(" ");
 
                 for (var i = 0; i < classes.length; i++)
                 {
                     $(row).addClass(classes[i]);
                 }
             }
-
-            if (row[17])
+            else if (data[17])
             {
-                var classes = row[17].split(" ");
+                var classes = data[17].split(" ");
 
                 for (var i = 0; i < classes.length; i++)
                 {
                     $(row).addClass(classes[i]);
                 }
+            }
+            else
+            {
+                $(row).addClass('card-style-default');
             }
         },
         "columnDefs": [

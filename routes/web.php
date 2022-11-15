@@ -395,7 +395,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 'url' => $url,
                 'image' => '',
                 'image_banner' => '',
-                'classes' => $classes
+                'classes' => ($classes) ? $classes : ''
             ];
 
             $seed = null;
