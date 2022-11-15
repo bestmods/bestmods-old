@@ -54,12 +54,42 @@
 
 .card-style-9
 {
-    @apply !bg-orange-500/20;
+    @apply !bg-orange-600/50;
 }
 
 .card-style-10
 {
-    @apply !bg-yellow-500/20;
+    @apply !bg-yellow-600/50;
+}
+
+.card-style-11
+{
+    @apply !bg-green-600/50;
+}
+
+.card-style-12
+{
+    @apply !bg-blue-600/50;
+}
+
+.card-style-13
+{
+    @apply !bg-sky-600/50;
+}
+
+.card-style-14
+{
+    @apply !bg-cyan-600/50;
+}
+
+.card-style-14
+{
+    @apply !bg-purple-600/50;
+}
+
+.card-style-15
+{
+    @apply !bg-lime-600/50;
 }
 
 
