@@ -52,6 +52,16 @@
     @apply !bg-green-500/20;
 }
 
+.card-style-9
+{
+    @apply !bg-orange-500/20;
+}
+
+.card-style-10
+{
+    @apply !bg-yellow-500/20;
+}
+
 
 #bgol
 {
