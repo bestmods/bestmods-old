@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom card styles (dynamic). We must include them now and not rely on Tailwind CSS to compile them into the CSS due to use loading the classes from JavaScript. */
 .card-style-default
 {
     @apply !bg-black/50;
@@ -91,7 +92,6 @@
 {
     @apply !bg-lime-600/50;
 }
-
 
 #bgol
 {
