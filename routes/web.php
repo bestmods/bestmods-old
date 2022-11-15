@@ -395,7 +395,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 'url' => $url,
                 'image' => '',
                 'image_banner' => '',
-                'classes' => ($classes) ? $classes : ''
+                'classes' => $classes
             ];
 
             $seed = null;
@@ -406,13 +406,23 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 $addInfo = $info;
                 array_splice($addInfo, 2, 1);
 
-                $seed = Seed::firstOrCreate(['url' => $url], $addInfo);
+                if (!$image_remove)
+                {
+                    unset($addInfo['image']);
+                }
+
+                if (!$image_banner_remove)
+                {
+                    unset($addInfo['image_banner']);
+                }
+
+                $seed = Seed::updateOrCreate(['url' => $url], $addInfo);
                 $item_created = true;
             }
             else
             {
                 // Retrieve and update if exists.
-                $seed = Seed::where('id', $id)->get()->first();
+                $seed = Seed::find($id);
 
                 if (!$image_remove)
                 {
@@ -476,7 +486,12 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 $addInfo = $info;
                 array_splice($addInfo, 1, 1);
 
-                $game = Game::firstOrCreate(['name_short' => $name_short], $addInfo);
+                if (!$image_remove)
+                {
+                    unset($addInfo['image']);
+                }
+
+                $game = Game::updateOrCreate(['name_short' => $name_short], $addInfo);
                 $item_created = true;
             }
             else
