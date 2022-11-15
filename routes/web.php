@@ -122,12 +122,15 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         $description = $mod->description;
         $description_short = $mod->description_short;
         $install_help = $mod->install_help;
+        
 
         $downloads = array();
         $screenshots = array();
 
         $gameReal = $mod->gameReal;
         $seedReal = $mod->seedReal;
+
+        $classes = $seedReal->classes;
 
         $games = Game::all();
         $seeds = Seed::all();
@@ -261,6 +264,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
         $id = $request->get('id', -1);
 
         $image = $request->file('image');
+        $image_remove = ($request->get('image-remove', '') == 'on') ? true : false;
 
         // Handle Mod insert.
         if ($new_type == 'mod')
@@ -348,6 +352,11 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 unset($info['total_downloads']);
                 unset($info['total_views']);
 
+                if (!$image_remove)
+                {
+                    unset($info['image']);
+                }
+
                 // Retrieve and update if exists.
                 $mod = Mod::where('id', $id)->get()->first();
 
@@ -378,6 +387,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
             $classes = $request->get('classes', '');
 
             $image_banner = $request->file('image_banner');
+            $image_banner_remove = ($request->get('image_banner-remove', '') == 'on') ? true : false;
 
             $info = [
                 'name' => $name,
@@ -403,6 +413,16 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
             {
                 // Retrieve and update if exists.
                 $seed = Seed::where('id', $id)->get()->first();
+
+                if (!$image_remove)
+                {
+                    unset($info['image']);
+                }
+
+                if (!$image_banner_remove)
+                {
+                    unset($info['image_banner']);
+                }
 
                 if ($seed->exists)
                 {
@@ -463,6 +483,11 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
             {
                 // Retrieve and update if exists.
                 $game = Game::where('id', $id)->get()->first();
+
+                if (!$image_remove)
+                {
+                    unset($info['image']);
+                }
 
                 if ($game->exists)
                 {

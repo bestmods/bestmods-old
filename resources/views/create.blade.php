@@ -27,6 +27,9 @@
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image</label>
                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Game Image"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
+
+                <input class="inline align-middle border-blue-900 rounded py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image-remove" name="image-remove" type="checkbox" value="0" /> <label class="inline align-middle text-gray-200 text-sm font-bold mb-2" for="image-remove">Remove Current</label>
+                
             </div>
 
             <div class="mb-4">
@@ -46,12 +49,16 @@
             @elseif (isset($type) && $type == 'seed')
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image</label>
-                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Seed Image"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Seed Image" />
+
+                <input class="inline align-middle border-blue-900 rounded py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image-remove" name="image-remove" type="checkbox" /> <label class="inline align-middle text-gray-200 text-sm font-bold mb-2" for="image-remove">Remove Current</label>
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="image_banner">Image Banner</label>
-                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image_banner" name="image_banner" type="file" placeholder="Seed Image Banner"{{!! isset($image_banner) ? ' value="' . $image_banner . '"' : '' !!}} />
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image_banner" name="image_banner" type="file" placeholder="Seed Image Banner" />
+
+                <input class="inline align-middle border-blue-900 rounded py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image_banner-remove" name="image_banner-remove" type="checkbox" /> <label class="inline align-middle text-gray-200 text-sm font-bold mb-2" for="image_banner-remove">Remove Current</label>
             </div>
 
             <div class="mb-4">
@@ -76,7 +83,9 @@
             @else
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="image">Image</label>
-                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Mod Image"{{!! isset($image) ? ' value="' . $image . '"' : '' !!}} />
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image" name="image" type="file" placeholder="Mod Image" />
+
+                <input class="inline align-middle border-blue-900 rounded py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="image-remove" name="image-remove" type="checkbox" /> <label class="inline align-middle text-gray-200 text-sm font-bold mb-2" for="image-remove">Remove Current</label>
             </div>
 
             <div class="mb-4">
