@@ -45,7 +45,8 @@
                     </p>
                 </div>
 
-                <div class="flex justify-between flex-col">
+                <div class="flex flex-row justify-center items-center">
+                    <a href="{{ $mod->seedReal->protocol . '://' . $mod->seedReal->url . '/' . $mod->url }}" class="text-white bg-blue-700 mr-5 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded px-4 py-2 mt-2 max-w-xs" target="_blank">Original</a>
                     <a href="{{ $base_url . '/edit' }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded px-4 py-2 mt-2 max-w-xs">Edit</a>
                 </div>
             </div>

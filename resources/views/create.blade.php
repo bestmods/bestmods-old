@@ -117,7 +117,7 @@
 
             <div class="mb-4">
                 <label class="block text-gray-200 text-sm font-bold mb-2" for="url">URL</label>
-                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="url" name="url" type="text" placeholder="https://moddingcommunity.com/something" {{!! isset($url) ? ' value="' . $url . '"' : '' !!}} />
+                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="url" name="url" type="text" placeholder="something/to/somewhere" {{!! isset($url) ? ' value="' . $url . '"' : '' !!}} />
             </div>
 
             <div class="mb-4">
