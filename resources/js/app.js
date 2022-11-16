@@ -145,6 +145,11 @@ $(document).ready(function ()
 
         var new_url = main_url + '/' + view;
 
+        if (view == 'overview')
+        {
+            new_url = main_url;
+        }
+
         if (history.pushState) 
         {
             window.history.pushState({path:new_url},'',new_url);

@@ -11,9 +11,11 @@
     <h1 class="text-3xl font-bold mb-4">Create Item - {{ isset($type) ? ucfirst($type) : 'Mod' }}!</h1>
     @endif
     <div>
-        <button data-view-btn data-show-id="mod" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ !isset($type) || (isset($type) && $type == 'mod') ? 'bg-gray-500' : 'bg-gray-900' }}">Mod</button>
-        <button data-view-btn data-show-id="seed" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ (isset($type) && $type == 'seed') ? 'bg-gray-500' : 'bg-gray-900' }}">Seed</button>
-        <button data-view-btn data-show-id="game" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ (isset($type) && $type == 'game') ? 'bg-gray-500' : 'bg-gray-900' }}">Game</button>
+        @if (!isset($view) || $view != 'edit')
+            <button data-view-btn data-show-id="mod" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ !isset($type) || (isset($type) && $type == 'mod') ? 'bg-gray-500' : 'bg-gray-900' }}">Mod</button>
+            <button data-view-btn data-show-id="seed" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ (isset($type) && $type == 'seed') ? 'bg-gray-500' : 'bg-gray-900' }}">Seed</button>
+            <button data-view-btn data-show-id="game" class="itemBtn text-white font-bold rounded-t p-3 mr-1 bg-opacity-50 {{ (isset($type) && $type == 'game') ? 'bg-gray-500' : 'bg-gray-900' }}">Game</button>
+        @endif
         
         <form method="POST" action="{{ Illuminate\Support\Facades\URL::to('/create', array('type' => 'mod')) }}" class="flex flex-col bg-black bg-opacity-50 shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype='multipart/form-data'>
             @csrf
