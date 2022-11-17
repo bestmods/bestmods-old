@@ -353,3 +353,8 @@ tbody tr
 {
     list-style:decimal;
 }
+
+#viewContent a
+{
+    text-decoration: underline;
+}
