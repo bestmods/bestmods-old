@@ -343,3 +343,13 @@ tbody tr
     font-size: 1.00em;
     line-height: 0.90;
 }
+
+#viewContent ul
+{
+    list-style: disc;
+}
+
+#viewContent ol
+{
+    list-style:decimal;
+}
