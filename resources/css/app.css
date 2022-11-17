@@ -354,7 +354,7 @@ tbody tr
     list-style:decimal;
 }
 
-#viewContent a
+#viewContent a:not(.modDownload)
 {
     text-decoration: underline;
 }
