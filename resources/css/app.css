@@ -142,7 +142,7 @@
 .card tbody tr 
 {
     max-width: 25em;
-    flex: 1 1 calc(25% - 16px);
+    flex: 1 1 25em;
     margin: 0.5em;
     border: none;
     border-radius: 15px;
