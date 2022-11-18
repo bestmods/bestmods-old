@@ -239,6 +239,7 @@ pre
     background-color: rgba(0, 88, 81, 0.5);
     white-space: pre-wrap;
     max-width: 100%;
+    word-break: break-all;
 }
 
 table 
