@@ -311,6 +311,7 @@ tbody tr
     background: #00585180;
     border-radius: 2px;
     display: inline-block;
+    word-break: break-all;
 }
 
 #viewContent pre code
