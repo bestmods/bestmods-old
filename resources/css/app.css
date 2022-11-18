@@ -344,6 +344,12 @@ tbody tr
     line-height: 0.90;
 }
 
+#viewContent ul, #viewContent ol
+{
+    padding: revert;
+    margin: revert;
+}
+
 #viewContent ul
 {
     list-style: disc;
