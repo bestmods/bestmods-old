@@ -16,25 +16,6 @@ class Mod extends Model
     public $incrementing = true;
     public $timestamps = true;
 
-    public static $columns = array
-    (
-        'id',
-        'name',
-        'description', 
-        'description_short',
-        'install_help',
-        'url',
-        'custom_url',
-        'image',
-        'downloads',
-        'screenshots',
-        'created_at',
-        'updated_at',
-        'rating',
-        'total_views',
-        'total_downloads'
-    );
-
     protected $fillable = array
     (
         'name',
@@ -66,15 +47,5 @@ class Mod extends Model
     public function uniqueIds()
     {
         return array(array('seed', 'url'), 'custom_url');
-    }
-
-    public function scopeGeneral($query)
-    {
-        return $query->select($this->columns);
-    }
-
-    public function scopeExclude($query, $columns)
-    {
-        return $query->select(array_diff($this->columns, $columns));
     }
 }

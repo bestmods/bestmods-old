@@ -9,6 +9,7 @@
         "autoprefixer": "^10.4.12",
         "axios": "^1.1.2",
         "bootstrap": "^5.2.1",
+        "imports-loader": "^4.0.1",
         "laravel-vite-plugin": "^0.6.0",
         "lodash": "^4.17.19",
         "postcss": "^8.4.18",
@@ -18,6 +19,7 @@
     },
     "dependencies": {
         "datatables.net-dt": "^1.12.1",
+        "datatables.net-scroller": "^2.0.7",
         "datatables.net-scroller-dt": "^2.0.7",
         "jquery": "^3.6.1"
     }

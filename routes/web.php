@@ -48,9 +48,43 @@ Route::get('/', function (ServerRequestInterface $request) {;
     return view('global', ['page' => 'index', 'headinfo' => $headinfo, 'base_url' => $base_url]);
 })->middleware(['auth0.authenticate.optional']);
 
-Route::get('/retrieve', function(ServerRequestInterface $request) {
-    $mods = Mod::with('seedReal')->with('gameReal')->get();
+Route::get('/retrieve', function(Request $request) {
+    $draw = $request->get('draw', 1);
+    $start = $request->get('start', 0);
+    $length = $request->get('length', 18);
+    $searchVal = $request->get('search', '');
+
+    $searchVal = ($searchVal) ? $searchVal['value'] : '';
+
+    // Fake rows.
+    $fakeRows = env('FAKE_ROWS', false);
+    $fakeRowsCnt = env('FAKE_ROWS_CNT', 100000);
+
+    $mods = Mod::select(['mods.id AS id', 'seeds.id AS sid', 'games.id AS gid', 'mods.name AS mname', 'description_short', 'seeds.name AS sname', 'games.name AS gname', 'mods.total_views AS total_views', 'mods.total_downloads AS total_downloads', 'mods.rating AS rating', 'mods.url AS url', 'mods.custom_url AS custom_url', 'mods.image as image', 'seeds.classes AS sclasses', 'games.classes AS gclasses', 'seeds.url AS surl', 'games.image AS gimage', 'seeds.image AS simage', 'seeds.image_banner AS simage_banner', 'seeds.protocol AS sprotocol'])->join('seeds', 'mods.seed', '=', 'seeds.id')->join('games', 'mods.game', '=', 'games.id');
+
+    if (strlen($searchVal) > 0)
+    {
+        $cols = array
+        (
+            'mods.name',
+            'mods.description_short',
+            'seeds.name',
+            'games.name'
+        );
+
+        foreach ($cols as $col)
+        {
+            $mods = $mods->orWhere($col, 'like', '%' . $searchVal . '%');
+        }
+    }
+
+    $mods = $mods->skip(($fakeRows) ? 0 : $start)->take(($fakeRows) ? 1 : $length)->get();
+
     $json = array('data' => array());
+
+    $json['recordsTotal'] = ($fakeRows) ? $fakeRowsCnt : Mod::all()->count();
+    $json['recordsFiltered'] = ($fakeRows) ? intval($fakeRowsCnt / 2) : $mods->count();
+    $json['draw'] = intval($draw);
     
     // We have to format it for DataTables.
     foreach ($mods as $mod)
@@ -60,7 +94,7 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
 
         if (!empty($mod->seedReal->image_banner))
         {
-            $img = asset('storage/images/seeds/' . $mod->seedReal->image_banner);
+            $img = asset('storage/images/seeds/' . $mod->simage_banner);
         }
 
         if (!empty($mod->image))
@@ -68,7 +102,18 @@ Route::get('/retrieve', function(ServerRequestInterface $request) {
             $img = asset('storage/images/mods/' . $mod->image);
         }
 
-        $json['data'][] = array($mod->id, $img, $mod->name, $mod->description_short, isset($mod->gameReal->name) ? $mod->gameReal->name : '', isset($mod->seedReal->name) ? $mod->seedReal->name : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->seedReal->url) ? $mod->seedReal->url : '', $mod->custom_url, '', isset($mod->gameReal->image) ? asset('storage/images/games/' . $mod->gameReal->image) : '', isset($mod->seedReal->image) ? asset('storage/images/seeds/' . $mod->seedReal->image) : '', isset($mod->seedReal->protocol) ? $mod->seedReal->protocol : 'https', isset($mod->seedReal->classes) ? $mod->seedReal->classes : '', isset($mod->gameReal->classes) ? $mod->gameReal->classes : '');
+        // For testing...
+        if ($fakeRows)
+        {
+            for ($i = $start; $i <= $start + $length; $i++)
+            {
+                $json['data'][] = array($i, $img, $mod->mname . ' ' . $i, $mod->description_short, isset($mod->gname) ? $mod->gname : '', isset($mod->sname) ? $mod->sname : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->surl) ? $mod->surl : '', $mod->custom_url, '', isset($mod->gimage) ? asset('storage/images/games/' . $mod->gimage) : '', isset($mod->simage) ? asset('storage/images/seeds/' . $mod->simage) : '', isset($mod->sprotocol) ? $mod->sprotocol : 'https', isset($mod->sclasses) ? $mod->sclasses : '', isset($mod->gclasses) ? $mod->gclasses : '');
+            }
+        }
+        else
+        {
+            $json['data'][] = array($mod->id, $img, $mod->mname, $mod->description_short, isset($mod->gname) ? $mod->gname : '', isset($mod->sname) ? $mod->sname : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->surl) ? $mod->surl : '', $mod->custom_url, '', isset($mod->gimage) ? asset('storage/images/games/' . $mod->gimage) : '', isset($mod->simage) ? asset('storage/images/seeds/' . $mod->simage) : '', isset($mod->sprotocol) ? $mod->sprotocol : 'https', isset($mod->sclasses) ? $mod->sclasses : '', isset($mod->gclasses) ? $mod->gclasses : '');
+        }
     }
 
     return json_encode($json);

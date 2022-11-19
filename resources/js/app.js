@@ -1,20 +1,41 @@
-import $ from 'jquery';
-
-import './bootstrap';
-import '../css/app.css';
-
-import setup from 'datatables.net-dt'
-import 'datatables.net-scroller-dt';
+import jQuery from 'jquery';
 
 import '../css/datatables.min.css';
+import '../css/app.css';
+
+import dt from 'datatables.net-scroller-dt';
 
 import './prettyprint';
 
-$(document).ready(function ()
+import './bootstrap';
+
+dt(window, jQuery);
+
+jQuery(function($)
 {
-    var table = $('#mods').DataTable({
+    var modsTable = $('#mods').DataTable(
+    {
+        processing: true,
+        serverSide: true,
+        ajax: 
+        {
+            "url": "/retrieve",
+            "contentType": "application/json",
+            "type": "GET"
+        },
         dom: 'rt',
-        ajax: "/retrieve",
+        stateSave: false,
+        scroller: 
+        {
+            rowHeight: 206,
+            displayBuffer: 36,
+            boundaryScale: 0.5,
+            loadingIndicator: true
+        },
+        deferRender: true,
+        scrollY: 1000,
+        paging: true,
+        pageLength: 6,
         createdRow: function (row, data, dataIndex) 
         {
             if (data[17])
@@ -40,10 +61,14 @@ $(document).ready(function ()
                 $(row).addClass('card-style-default');
             }
         },
-        "columnDefs": [
+        columnDefs: [
             {
                 targets: [0, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17],
                 visible: false
+            },
+            {
+                targets: 0,
+                name: 'DT_RowIndex',
             },
             {
                 targets: 1,
@@ -123,18 +148,18 @@ $(document).ready(function ()
             }
         ]
     });
-    
-    $('#default-search').on( 'keyup click', function () {
 
-    if ($('#mods').length )
+    $('#default-search').on( 'keyup click', function () 
     {
-        table.search($('#default-search').val()).draw();
-    }
-    else
-    {
-        window.location.href = "/";
-    }
-    } );
+        if ($('#mods').length )
+        {
+            modsTable.search($('#default-search').val()).draw();
+        }
+        else
+        {
+            window.location.href = "/";
+        }
+    });
 
     var main_url = curUrl;
 
