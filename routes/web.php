@@ -60,13 +60,14 @@ Route::get('/retrieve', function(Request $request) {
     $fakeRows = env('FAKE_ROWS', false);
     $fakeRowsCnt = env('FAKE_ROWS_CNT', 100000);
 
-    $mods = Mod::select(['mods.id AS id', 'seeds.id AS sid', 'games.id AS gid', 'mods.name AS mname', 'description_short', 'seeds.name AS sname', 'games.name AS gname', 'mods.total_views AS total_views', 'mods.total_downloads AS total_downloads', 'mods.rating AS rating', 'mods.url AS url', 'mods.custom_url AS custom_url', 'mods.image as mimage', 'seeds.classes AS sclasses', 'games.classes AS gclasses', 'seeds.url AS surl', 'games.image AS gimage', 'seeds.image AS simage', 'seeds.image_banner AS simage_banner', 'seeds.protocol AS sprotocol'])->join('seeds', 'mods.seed', '=', 'seeds.id')->join('games', 'mods.game', '=', 'games.id');
+    $mods = Mod::select(['mods.id AS id', 'seeds.id AS sid', 'games.id AS gid', 'mods.name AS mname', 'description_short', 'seeds.name AS sname', 'games.name AS gname', 'games.name_short AS gnameshort', 'mods.total_views AS total_views', 'mods.total_downloads AS total_downloads', 'mods.rating AS rating', 'mods.url AS url', 'mods.custom_url AS custom_url', 'mods.image as mimage', 'seeds.classes AS sclasses', 'games.classes AS gclasses', 'seeds.url AS surl', 'games.image AS gimage', 'seeds.image AS simage', 'seeds.image_banner AS simage_banner', 'seeds.protocol AS sprotocol'])->join('seeds', 'mods.seed', '=', 'seeds.id')->join('games', 'mods.game', '=', 'games.id');
 
     if (strlen($searchVal) > 0)
     {
         $cols = array
         (
             'mods.name',
+            'games.name_short',
             'mods.description_short',
             'seeds.name',
             'games.name'
