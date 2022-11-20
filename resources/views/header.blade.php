@@ -1,5 +1,5 @@
 
-<header>
+<header class="container mx-auto px-10">
     <div id="bestmodsLogo">
         <a href="/"><img src="/images/bestmods.png" alt="logo" /></a>
     </div>

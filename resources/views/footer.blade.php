@@ -1,4 +1,4 @@
-<footer>
+<footer class="container mx-auto px-10">
     <div class="flex-none md:flex md:flex-row md:flex-wrap md:justify-between p-6 rounded-lg shadow bg-gray-800 m-7">
         <span class="text-sm text-gray-200 sm:text-center max-w-[50%] justify-start">© 2022 <a href="https://bestmods.io/" class="hover:underline">BestMods</a>. All Rights Reserved.
         </span>

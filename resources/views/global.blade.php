@@ -4,7 +4,7 @@
     <body>
         @include('background')
         
-        <div class="container mx-auto px-10">
+        <div class="mx-auto px-10">
             @include('header')
             @include($page)
 

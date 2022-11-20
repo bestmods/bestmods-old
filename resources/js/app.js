@@ -13,6 +13,9 @@ dt(window, jQuery);
 
 jQuery(function($)
 {
+    // Dirty and inconsistent height variable.
+    var rowH = (684 + 10) / 3;
+
     var modsTable = $('#mods').DataTable(
     {
         processing: true,
@@ -27,7 +30,7 @@ jQuery(function($)
         stateSave: false,
         scroller: 
         {
-            rowHeight: 206,
+            rowHeight: rowH,
             displayBuffer: 36,
             boundaryScale: 0.5,
             loadingIndicator: true
@@ -148,6 +151,23 @@ jQuery(function($)
             }
         ]
     });
+
+    // For when we need to calculate the amount of mods per line with CSS grid layout (when we're auto-filling grid).
+    // We'll need to dynamically change the row height by (Max Row Height / Mods Per Line) in order for Scroller to work properly.
+    /*
+    setTimeout(function()
+    {
+        var grid = $('#mods > tbody');
+    
+        // Get number of columns (mods per line).
+        var columns = grid.css("grid-template-columns").split(" ").length;
+    
+        // Now get height of first row.
+        var rowHeight = $('#mods > tbody > tr').first().height();
+
+        console.log("Columns => " + columns + ". Row Height => " + rowHeight);
+    }, 2000);
+    */
 
     $('#default-search').on( 'keyup click', function () 
     {
