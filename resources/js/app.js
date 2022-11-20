@@ -247,6 +247,20 @@ jQuery(function($)
         elem.append(urlHtml);
     });
 
+    $(document).on('click', '.dl-rm-btn', function(e)
+    {
+        var tar = $(e.currentTarget);
+
+        tar.parent().remove();
+    });
+
+    $(document).on('click', '.ss-rm-btn', function(e)
+    {
+        var tar = $(e.currentTarget);
+
+        tar.parent().remove();
+    });
+
     function reloadContent(view='overview')
     {
         $('[data-view]').each(function(idx)

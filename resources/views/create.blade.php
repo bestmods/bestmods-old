@@ -146,12 +146,33 @@
                 <h2 class="text-xl">Download URLs</h2>
 
                 <div id="downloads">
-                    <label class="block text-gray-200 text-sm mt-4 font-bold mb-2" for="download-1-name">Name</label>
-                    <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-1-name" name="download-1-name" type="text" placeholder="Display name of file." {{!! isset($downloads[0]) ? ' value="' . $downloads[0]['name'] . '"' : '' !!}} />
+                    @if (isset($downloads) && count($downloads))
+                        @foreach ($downloads as $key => $download)
+                            @php
+                                $itemID = $key + 1;
+                            @endphp
 
-                    <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="download-1-url">URL</label>
-                    <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-1-url" name="download-1-url" type="text" placeholder="URL of file." {{!! isset($downloads[0]) ? ' value="' . $downloads[0]['url'] . '"' : '' !!}} />
+                            <div id="download-{{ $itemID }}">
+                                <label class="block text-gray-200 text-sm mt-4 font-bold mb-2" for="download-{{ $itemID }}-name">Name</label>
+                                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-{{ $itemID }}-name" name="download-{{ $itemID }}-name" type="text" placeholder="Display name of file." value="{{ $download['name'] }}" />
 
+                                <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="download-{{ $itemID }}-url">URL</label>
+                                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-{{ $itemID }}-url" name="download-{{ $itemID }}-url" type="text" placeholder="URL of file." value="{{ $download['url'] }}" />
+
+                                <button type="button" class="dl-rm-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mt-2">Remove</button>
+                            </div>
+                        @endforeach
+                    @else
+                        <div id="download-1">
+                            <label class="block text-gray-200 text-sm mt-4 font-bold mb-2" for="download-1-name">Name</label>
+                            <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-1-name" name="download-1-name" type="text" placeholder="Display name of file." />
+
+                            <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="download-1-url">URL</label>
+                            <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-1-url" name="download-1-url" type="text" placeholder="URL of file." />
+
+                            <button type="button" class="dl-rm-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mt-2">Remove</button>
+                        </div>
+                    @endif
                 </div>
 
                 <button type="button" id="downloadsBtn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">Add More</button>
@@ -161,8 +182,26 @@
                 <h2 class="text-xl">Screenshots</h2>
 
                 <div id="screenshots">
-                    <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="screenshot-1-url">URL</label>
-                    <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="screenshot-1-url" name="screenshot-1-url" type="text" placeholder="URL to screenshot." {{!! isset($screenshots[0]) ? ' value="' . $screenshots[0] . '"' : '' !!}} />
+                    @if (isset($screenshots) && count($screenshots))
+                        @foreach ($screenshots as $key => $screenshot)
+                            @php
+                                    $itemID = $key + 1;
+                            @endphp
+                            <div id="screenshot-{{ $itemID }}">
+                                <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="screenshot-{{ $itemID }}-url">URL</label>
+                                <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="screenshot-{{ $itemID }}-url" name="screenshot-{{ $itemID }}-url" type="text" placeholder="URL to screenshot." value="{{ $screenshot }}" />
+
+                                <button type="button" class="ss-rm-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mt-2">Remove</button>
+                            </div>
+                        @endforeach
+                    @else
+                        <div id="screenshot-1">
+                            <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="screenshot-1-url">URL</label>
+                            <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="screenshot-1-url" name="screenshot-1-url" type="text" placeholder="URL to screenshot." />
+
+                            <button type="button" class="ss-rm-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mt-2">Remove</button>
+                        </div>
+                    @endif
                 </div>
 
                 <button type="button" id="screenshotsBtn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">Add More</button>
