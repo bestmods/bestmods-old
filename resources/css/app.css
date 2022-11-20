@@ -254,7 +254,6 @@ tbody
     justify-content: center;
     grid-auto-rows: 1fr;
     grid-template-columns: repeat(auto-fill, minmax(2em, 25em));
-    
 }
 
 tbody tr
