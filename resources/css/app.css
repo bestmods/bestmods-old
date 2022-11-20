@@ -369,7 +369,7 @@ tbody tr
 
 .dataTables_scrollBody
 {
-    scrollbar-width: 0px;
+    scrollbar-width: none;
 }
 
 .dataTables_scrollBody::-webkit-scrollbar
