@@ -7,6 +7,9 @@
                 <a href="/" class="mr-4 hover:underline md:mr-6 ">Home</a>
             </li class="w-auto">
             <li>
+                <a href="https://github.com/bestmods/roadmap/issues" target="_blank" class="mr-4 hover:underline md:mr-6">Road Map</a>
+            </li>
+            <li>
                 <a href="https://github.com/BestMods/bestmods" target="_blank" class="mr-4 hover:underline md:mr-6">Source</a>
             </li>
             <li class="w-auto">
