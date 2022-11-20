@@ -119,13 +119,10 @@ Route::get('/retrieve', function(Request $request) {
     return json_encode($json);
 })->middleware(['auth0.authenticate.optional']);
 
-Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mod, $view='') {
-    $params = $request->getQueryParams();
-
+Route::get('/view/{mod}/{view?}', function (Request $request, $mod, $view='') {
     if (empty($view))
     {
-        $view = (isset($params['view']) && !empty($params['view'])) ? $params['view'] : 
-        'overview';
+        $view = $request->get('view', 'overview');
     }
 
     // Assume we're firstly loading based off of custom URL.
@@ -154,9 +151,18 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
     $seeds = null;
     $classes = null;
 
+    $item_created = false;
+
     // If we're in edit mode, fill out needed variables.
     if ($view == 'edit')
     {
+        $edited = $request->get('edited', false);
+
+        if ($edited)
+        {
+            $item_created = true;
+        }
+
         $type = 'mod';
         $id = $mod->id;
         $name = $mod->name;
@@ -287,7 +293,7 @@ Route::get('/view/{mod}/{view?}', function (ServerRequestInterface $request, $mo
         'url' => ($view == 'overview') ? $base_url : Url::to('/view', array('mod' => $mod->custom_url, 'view' => $view))
     );
 
-    return view('global', ['page' => 'view', 'mod' => $mod, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url, 'type' => $type,'id' => $id, 'name' => $name, 'name_short' => $name_short, 'image' => $image, 'protocol' => $protocol, 'url' => $url, 'custom_url' => $custom_url, 'description' => $description, 'install_help' => $install_help, 'description_short' => $description_short, 'downloads' => $downloads, 'screenshots' => $screenshots, 'games' => $games, 'seeds' => $seeds, 'classes' => $classes, 'seedReal' => $seedReal, 'gameReal' => $gameReal]);
+    return view('global', ['page' => 'view', 'mod' => $mod, 'view' => $view, 'headinfo' => $headinfo, 'base_url' => $base_url, 'type' => $type,'id' => $id, 'name' => $name, 'name_short' => $name_short, 'image' => $image, 'protocol' => $protocol, 'url' => $url, 'custom_url' => $custom_url, 'description' => $description, 'install_help' => $install_help, 'description_short' => $description_short, 'downloads' => $downloads, 'screenshots' => $screenshots, 'games' => $games, 'seeds' => $seeds, 'classes' => $classes, 'seedReal' => $seedReal, 'gameReal' => $gameReal, 'item_created' => $item_created]);
 })->middleware(['auth0.authenticate.optional']);
 
 Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $type='mod') {
@@ -303,6 +309,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
     $item_created = false;
 
     $new_type = $request->get('type', null);
+    $mod = null;
 
     if ($new_type)
     {
@@ -382,8 +389,6 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 'total_downloads' => 0,
                 'total_views' => 0
             ];
-            
-            $mod = null;
 
             // Create or update.
             if ($id < 1)
@@ -568,6 +573,8 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 $game->save();
             }
         }
+
+        return redirect(Url::to('/view', array('mod' => $mod->custom_url, 'view' => 'edit')) . '?edited=1');
     }
 
     $base_url = Url::to('/create');
