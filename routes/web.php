@@ -574,6 +574,18 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
             }
         }
 
+        // Before redirecting, destroy caches for description and install.
+        if (isset($mod) && $mod)
+        {
+            $key = 'mod_desc.' . $mod->id;
+
+            Cache::forget($key);
+
+            $key = 'mod_install.'.$mod->id;
+
+            Cache::forget($key);
+        }
+
         return redirect(Url::to('/view', array('mod' => $mod->custom_url, 'view' => 'edit')) . '?edited=1');
     }
 
