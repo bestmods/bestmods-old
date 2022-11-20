@@ -28,6 +28,11 @@ Any help from the open source community is highly appreciated on this project! W
 
 Please take a look at our [road map](https://github.com/bestmods/roadmap/issues) and join our [Discord server](https://discord.moddingcommunity.com/) for communication!
 
+## Our Community
+[Best Mods](https://bestmods.io) is ran by the [The Modding Community](https://moddingcommunity.com/) which is a newer project taking modding to the next level by offering a unique marketplace, server and community browser & discovery, and forum! We have a Discord [here](https://discord.moddingcommunity.com/) if you want to socialize and interact with others including talented modders and content creators.
+
+Additionally, you may also use our discussions forum [here](https://github.com/orgs/BestMods/discussions)!
+
 ## Installation & Deployment
 The project utilizes [Laravel](https://laravel.com/), [Tailwind CSS](https://tailwindcss.com/), [jQuery](https://jquery.com/), and [DataTables](https://datatables.net/) (for listing mods). Installation on a Linux server is fairly simple. However, I'd recommend making sure you have at least NodeJS `16.x`, Composer `2.2.x`, and NPM `8.x.x`.
 
@@ -77,14 +82,6 @@ php artisan serve
 
 # SETUP AUTH0 AND ADJUST DETAILS IN .env FILE.
 ```
-
-## Community
-Best Mods is ran by the [The Modding Community](https://ModdingCommunity.com/) which is a newer project taking modding to the next level by offering a unique marketplace, server and community browser & discovery, and forum! We have a Discord [here](https://dsc.gg/modcommunity) if you want to socialize and interact with others including talented modders and content creators.
-
-Additionally, for Best Mods specifically, you may also use our discussions forum on GitHub [here](https://github.com/orgs/BestMods/discussions)!
-
-### Contributions
-Contributions are always welcomed! Feel free to submit pull requests if you see anything that may be improved or you want to help out with the project in general!
 
 ## Credits
 * [Christian Deacon](https://github.com/gamemann) - Creator
