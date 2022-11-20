@@ -9,15 +9,29 @@ Browse the best mods in gaming from many sources on the Internet!
 [BestMods.io](https://bestmods.io/)
 
 ## About This Project
-An open-source [website](https://bestmods.io) and project made by [Christian Deacon](https://github.com/gamemann) that helps users find their favorite mods. This project is powered by the [@modcommunity](https://github.com/modcommunity)!
+An open-source [website](https://bestmods.io) made by [Christian Deacon](https://github.com/gamemann) that helps users find their favorite mods.
 
-Help support this project and modding in general by spreading the word!
+Please also check out the [@modcommunity](https://github.com/modcommunity)! They are doing things that will change the direction of gaming on a large scale by using modding and open source like never seen before!
 
 ## Road Map
-A road map for the website may be found [here](https://github.com/orgs/BestMods/projects/1)! Each view represents a month and all items within that view is projected to be completed by the end of the specific month.
+A road map for the website may be found [here](https://github.com/bestmods/roadmap/issues)!
+
+Each GitHub project represents a quarter and lists all things we're hoping to get completed by the end of said quarter.
+
+## Contributing
+Any help from the open source community is highly appreciated on this project! We utilize the following.
+
+* [Laravel](https://laravel.com/) (PHP and Back-End).
+* [Tailwind CSS](https://tailwindcss.com/) (HTML, CSS, and Front-End).
+* [jQuery](https://jquery.com/) (JavaScript and Front-End).
+* [DataTables](https://datatables.net/) (awesome jQuery library for loading millions of entries in a table).
+
+Please take a look at our [road map](https://github.com/bestmods/roadmap/issues) and join our [Discord server](https://discord.moddingcommunity.com/) for communication!
 
 ## Installation & Deployment
 The project utilizes [Laravel](https://laravel.com/), [Tailwind CSS](https://tailwindcss.com/), [jQuery](https://jquery.com/), and [DataTables](https://datatables.net/) (for listing mods). Installation on a Linux server is fairly simple. However, I'd recommend making sure you have at least NodeJS `16.x`, Composer `2.2.x`, and NPM `8.x.x`.
+
+Additionally, we currently use [Auth0](https://auth0.com/) for authentication with a custom role-based system. Uses with the `Admin` role may create mods, seeds, and games through the `/create` route.
 
 ```bash
 # Install PHP and required packages.
@@ -61,8 +75,7 @@ php artisan serve
 
 # For production, set debug to false in .env file and use a proper web server such as NGINX or Apache!
 
-# SETUP AUTH0 AND PUT INFO IN .env FILE.
-
+# SETUP AUTH0 AND ADJUST DETAILS IN .env FILE.
 ```
 
 ## Community
