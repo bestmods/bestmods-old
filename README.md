@@ -31,7 +31,7 @@ Additionally, you may also use our discussions forum [here](https://github.com/o
 ## Installation & Deployment
 The project utilizes [Laravel](https://laravel.com/), [Tailwind CSS](https://tailwindcss.com/), [jQuery](https://jquery.com/), and [DataTables](https://datatables.net/) (for listing mods). Installation on a Linux server is fairly simple. However, I'd recommend making sure you have at least NodeJS `16.x`, Composer `2.2.x`, and NPM `8.x.x`.
 
-Additionally, we currently use [Auth0](https://auth0.com/) for authentication with a custom role-based system. Uses with the `Admin` role may create mods, seeds, and games through the `/create` route.
+Additionally, we currently use [Auth0](https://auth0.com/) for authentication with a custom role-based system. Users with the `Admin` role may create mods, seeds, and games through the `/create` route.
 
 ```bash
 # Install PHP and required packages.
