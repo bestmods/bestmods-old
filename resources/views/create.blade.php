@@ -187,6 +187,7 @@
                             @php
                                     $itemID = $key + 1;
                             @endphp
+                            
                             <div id="screenshot-{{ $itemID }}">
                                 <label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="screenshot-{{ $itemID }}-url">URL</label>
                                 <input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="screenshot-{{ $itemID }}-url" name="screenshot-{{ $itemID }}-url" type="text" placeholder="URL to screenshot." value="{{ $screenshot }}" />

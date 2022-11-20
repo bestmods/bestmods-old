@@ -334,7 +334,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 // If we're not set, #break.
                 if (!$data)
                 {
-                    break;
+                    continue;
                 }
 
                 // We must be set, so add onto downloads array.
@@ -355,7 +355,7 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
                 // If we're not set, #break.
                 if (!$data)
                 {
-                    break;
+                    continue;
                 }
 
                 // We must be set, so add onto screenshots array.
