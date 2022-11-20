@@ -28,6 +28,14 @@ Please take a look at our [road map](https://github.com/bestmods/roadmap/issues)
 
 Additionally, you may also use our discussions forum [here](https://github.com/orgs/BestMods/discussions)!
 
+### Social Media
+* [TikTok](https://tiktok.com/@bestmodsio) (@bestmodsio)
+* [Twitter](https://twitter.com/bestmodsio) (@bestmodsio)
+* [Instagram](https://instagram.com/bestmodsio) (@bestmodsio)
+* [Facebook](https://facebook.com/bestmodsio)
+* [Linkedin](https://linkedin.com/company/bestmods)
+* [Steam](https://steamcommunity.com/groups/best-mods)
+
 ## Installation & Deployment
 The project utilizes [Laravel](https://laravel.com/), [Tailwind CSS](https://tailwindcss.com/), [jQuery](https://jquery.com/), and [DataTables](https://datatables.net/) (for listing mods). Installation on a Linux server is fairly simple. However, I'd recommend making sure you have at least NodeJS `16.x`, Composer `2.2.x`, and NPM `8.x.x`.
 
