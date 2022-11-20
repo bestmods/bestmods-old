@@ -225,10 +225,12 @@ jQuery(function($)
 
         var urlHtml = '<label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="download-' + dl_idx  +'-url">URL</label><input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="download-' + dl_idx  +'-url" name="download-' + dl_idx  +'-url" type="text" placeholder="URL of file." />';
 
+        var rmbtnHtml = '<button type="button" class="dl-rm-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mt-2">Remove</button>';
+
         // Append both to existing HTML.
         var elem = $('#downloads');
 
-        elem.append(nameHtml + urlHtml);
+        elem.append('<div id="download-' + dl_idx + '">' + nameHtml + urlHtml + rmbtnHtml + '</div>');
     });
 
     var ss_idx = 1;
@@ -241,10 +243,12 @@ jQuery(function($)
         // Add more inputs using download index.
         var urlHtml = '<label class="block text-gray-200 text-sm mt-3 font-bold mb-2" for="screenshot-' + ss_idx  +'-url">URL</label><input class="shadow appearance-none border-blue-900 rounded w-full py-2 px-3 text-gray-200 bg-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="screenshot-' + ss_idx  +'-url" name="screenshot-' + ss_idx  +'-url" type="text" placeholder="URL to screenshot." />';
 
+        var rmbtnHtml = '<button type="button" class="ss-rm-btn text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 mt-2">Remove</button>';
+
         // Append to existing HTML.
         var elem = $('#screenshots');
 
-        elem.append(urlHtml);
+        elem.append('<div id="screenshot-' + dl_idx + '">' + urlHtml + rmbtnHtml + '</div>');
     });
 
     $(document).on('click', '.dl-rm-btn', function(e)
