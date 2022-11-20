@@ -2,9 +2,6 @@
 Browse the best mods in gaming from many sources on the Internet!
 
 <a href="https://bestmods.io/" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview.jpeg" /></a>
-<a href="https://bestmods.io/view/cs-dynamicslots" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" /></a>
-<a href="https://bestmods.io/view/cs-dynamicslots/install" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" /></a>
-<a href="https://bestmods.io/view/cs-dynamicslots/downloads" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview4.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview4.jpeg" /></a>
 
 ## About This Project
 An open-source [website](https://bestmods.io) made by [Christian Deacon](https://github.com/gamemann) that helps users find their favorite mods.
@@ -80,6 +77,11 @@ php artisan serve
 
 # SETUP AUTH0 AND ADJUST DETAILS IN .env FILE.
 ```
+
+## Showcase
+<a href="https://bestmods.io/view/cs-dynamicslots" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview2.jpeg" /></a>
+<a href="https://bestmods.io/view/cs-dynamicslots/install" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview3.jpeg" /></a>
+<a href="https://bestmods.io/view/cs-dynamicslots/downloads" target="_blank"><img src="https://github.com/BestMods/bestmods/blob/master/preview4.jpeg" data-canonical-src="https://github.com/BestMods/bestmods/blob/master/preview4.jpeg" /></a>
 
 ## Credits
 * [Christian Deacon](https://github.com/gamemann) - Creator
