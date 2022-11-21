@@ -585,9 +585,9 @@ Route::match(['get', 'post'], '/create/{type?}', function (Request $request, $ty
             $key = 'mod_install.'.$mod->id;
 
             Cache::forget($key);
-        }
 
-        return redirect(Url::to('/view', array('mod' => $mod->custom_url, 'view' => 'edit')) . '?edited=1');
+            return redirect(Url::to('/view', array('mod' => $mod->custom_url, 'view' => 'edit')) . '?edited=1');
+        }
     }
 
     $base_url = Url::to('/create');
