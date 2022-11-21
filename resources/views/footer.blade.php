@@ -12,6 +12,9 @@
             <li>
                 <a href="https://github.com/BestMods/bestmods" target="_blank" class="mr-4 hover:underline md:mr-6">Source</a>
             </li>
+            <li>
+                <a href="https://github.com/orgs/bestmods/discussions/2" target="_blank" class="mr-4 hover:underline md:mr-6">Removals</a>
+            </li>
             <li class="w-auto">
                 <a href="https://moddingcommunity.com/" target="_blank" class="mr-4 hover:underline md:mr-6">Mod Community</a>
             </li>
