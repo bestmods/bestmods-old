@@ -1,8 +1,8 @@
 <footer class="container mx-auto px-10">
-    <div class="flex-none md:flex md:flex-row md:flex-wrap md:justify-between p-6 rounded-lg shadow bg-gray-800 m-7">
-        <span class="text-sm text-gray-200 sm:text-center max-w-[50%] justify-start">© 2022 <a href="https://bestmods.io/" class="hover:underline">BestMods</a>. All Rights Reserved.
+    <div class="flex-none text-center md:flex md:flex-row md:flex-wrap md:justify-between p-6 rounded-lg shadow bg-gray-800 m-7">
+        <span class="text-sm text-gray-200 text-center max-w-full justify-center md:max-w-[50%] md:text-left md:flex-row md:flex-wrap md:justify-start">© 2022 <a href="https://bestmods.io/" class="hover:underline">BestMods</a>. All Rights Reserved.
         </span>
-        <ul class="text-sm text-gray-300 max-w-[50%] flex flex-col justify-start md:flex-row md:flex-wrap md:justify-start">
+        <ul class="text-sm text-left text-gray-300 mt-2 max-w-full flex flex-row flex-wrap justify-center md:max-w-[50%] md:text-right md:mt-0 md:flex-row md:flex-wrap md:justify-start">
             <li class="w-auto">
                 <a href="/" class="mr-4 hover:underline md:mr-6 ">Home</a>
             </li class="w-auto">
