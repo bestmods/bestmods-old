@@ -362,6 +362,11 @@ tbody tr
     list-style:decimal;
 }
 
+#viewContent p
+{
+    @apply mb-5;
+}
+
 #viewContent a:not(.modDownload)
 {
     text-decoration: underline;
