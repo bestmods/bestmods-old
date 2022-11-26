@@ -35,7 +35,7 @@ class sitemap extends Command
                 $item = $mod->custom_url;
             }
 
-            $sitemap->add(Url::create(config('app.url') . '/view/' . $item)->setPriority(0.5));
+            $sitemap->add(Url::create(config('app.url') . '/view/' . $item)->setPriority(1.0));
         }
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
