@@ -51,6 +51,7 @@
     <script type="text/javascript">
         var curView = '{{ isset($view) ? $view : 'overview' }}';
         var curUrl = '{{ isset($base_url) ? $base_url : '/' }}';
+        var numModsPerpage = '{{ env('MODS_PER_PAGE', 50) }}';
     </script>
 
     <!-- CSS and JavaScript -->

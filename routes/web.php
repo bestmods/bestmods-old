@@ -49,10 +49,13 @@ Route::get('/', function (ServerRequestInterface $request) {;
 })->middleware(['auth0.authenticate.optional']);
 
 Route::get('/retrieve', function(Request $request) {
-    $draw = $request->get('draw', 1);
-    $start = $request->get('start', 0);
-    $length = $request->get('length', 18);
-    $searchVal = $request->get('search', '');
+    $page = $request->get('page', 1);
+    $numPerPage = env('MODS_PER_PAGE', 50);
+
+    $start = ($page == 1) ? 0 : ($page * $numPerPage);
+    $length = ($page * $numPerPage);
+
+    $searchVal = $request->get('s', '');
 
     $searchVal = ($searchVal) ? $searchVal['value'] : '';
 
@@ -81,15 +84,13 @@ Route::get('/retrieve', function(Request $request) {
 
     $mods = $mods->skip(($fakeRows) ? 0 : $start)->take(($fakeRows) ? 1 : $length)->get();
 
-    $json = array('data' => array());
-
-    $json['recordsTotal'] = ($fakeRows) ? $fakeRowsCnt : Mod::all()->count();
-    $json['recordsFiltered'] = ($fakeRows) ? intval($fakeRowsCnt / 2) : $mods->count();
-    $json['draw'] = intval($draw);
+    $json = [];
     
     // We have to format it for DataTables.
     foreach ($mods as $mod)
     {
+        $data = [];
+
         // Firstly, decide the image.
         $img = asset('images/default_mod.png');
 
@@ -103,21 +104,55 @@ Route::get('/retrieve', function(Request $request) {
             $img = asset('storage/images/mods/' . $mod->mimage);
         }
 
+        // Return parsed output.
+        $data['id'] = $mod->id;
+
+        // Basic mod info (image, name, and short description).
+        $data['image'] = '<img class="card-image" src="' . $img . '" alt="Mod Image"></img>';
+        $data['name'] = '<h1 class="text-3xl font-bold text-center"><a href="/view/' . $mod->custom_url . '" class="hover:underline">' . $mod->mname . '</a></h1>';
+        $data['description'] = $mod->description_short;
+
+        // Game and seed.
+        // First generate seed link (create proper link using protocol, etc.).
+        $seedProto = isset($mod->sprotocol) ? $mod->sprotocol : 'https';
+
+        $seedLink = $seedProto . '://' . $mod->surl;
+
+        $gameIcon = isset($mod->gimage) ? asset('storage/images/games/' . $mod->gimage) : '';
+        $seedIcon = isset($mod->simage) ? asset('storage/images/seeds/' . $mod->simage) : '';
+
+        $data['game'] = '<div class="card-seed"><img class="card-icon" src="' . $gameIcon . '" alt="Icon" /> ' . $mod->gname . '</div>';
+        $data['seed'] = '<div class="card-seed"><img class="card-icon" src="' . $seedIcon . '" alt="Icon" /> <a href="' . $seedLink . '" class="hover:underline" target="_blank">' . $mod->sname . '</a></div>';
+
+        // Stats (total views, downloads, and stars/rating).
+        $data['stats'] = '<div class="card-icons"><div class="card-icon-div text-center"><svg class="card-icon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 21c-5 0-11-5-11-9s6-9 11-9s11 5 11 9s-6 9-11 9zm0-14a5 5 0 1 0 0 10a5 5 0 0 0 0-10h0z"></path></svg> <span class="card-icon-text">' . $mod->total_views . '</span></div> <div class="card-icon-div text-center"><svg class="card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd"></path></svg> <span class="card-icon-text">' . $mod->rating . '</span></div> <div class="card-icon-div text-center"><svg class="card-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="none" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z"></path></svg> <span class="card-icon-text">' . $mod->total_downloads . '</span></div></div>';
+
+        // Bottom buttons.
+        $viewLink = '/view/' . $mod->custom_url;
+        $origLink = $seedLink . '/' . $mod->url;
+        
+        $data['buttons'] = '<div class="flex flex-col text-center"><a href="' . $viewLink . '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">View</a> <a href="' . $origLink . '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2" target="_blank">Original</a></div>';
+
+        // Classes.
+        $data['sclasses'] = $mod->sclasses;
+        $data['gclasses'] = $mod->gclasses;
+        
         // For testing...
         if ($fakeRows)
         {
             for ($i = $start; $i <= $start + $length; $i++)
             {
-                $json['data'][] = array($i, $img, $mod->mname . ' ' . $i, $mod->description_short, isset($mod->gname) ? $mod->gname : '', isset($mod->sname) ? $mod->sname : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->surl) ? $mod->surl : '', $mod->custom_url, '', isset($mod->gimage) ? asset('storage/images/games/' . $mod->gimage) : '', isset($mod->simage) ? asset('storage/images/seeds/' . $mod->simage) : '', isset($mod->sprotocol) ? $mod->sprotocol : 'https', isset($mod->sclasses) ? $mod->sclasses : '', isset($mod->gclasses) ? $mod->gclasses : '');
+                $dup = $data;
+                $dup['id'] = $dup['id'] + $i;
+                $json[] = $dup;
             }
         }
-        else
-        {
-            $json['data'][] = array($mod->id, $img, $mod->mname, $mod->description_short, isset($mod->gname) ? $mod->gname : '', isset($mod->sname) ? $mod->sname : '', $mod->rating, $mod->total_downloads, $mod->total_views, $mod->url, isset($mod->surl) ? $mod->surl : '', $mod->custom_url, '', isset($mod->gimage) ? asset('storage/images/games/' . $mod->gimage) : '', isset($mod->simage) ? asset('storage/images/seeds/' . $mod->simage) : '', isset($mod->sprotocol) ? $mod->sprotocol : 'https', isset($mod->sclasses) ? $mod->sclasses : '', isset($mod->gclasses) ? $mod->gclasses : '');
-        }
+
+        $json[] = $data;
     }
 
-    return json_encode($json);
+    return htmlspecialchars(json_encode($json), ENT_NOQUOTES);
+
 })->middleware(['auth0.authenticate.optional']);
 
 Route::get('/view/{mod}/{view?}', function (Request $request, $mod, $view='') {

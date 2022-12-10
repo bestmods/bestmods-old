@@ -372,14 +372,7 @@ tbody tr
     text-decoration: underline;
 }
 
-.dataTables_scrollBody
+#modstable td
 {
-    scrollbar-width: none;
-}
-
-.dataTables_scrollBody::-webkit-scrollbar
-{
-    width: 0px;
-    background: transparent;
-    scrollbar-width: 0px;
+    @apply py-2;
 }
