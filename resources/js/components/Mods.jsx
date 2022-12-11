@@ -88,7 +88,7 @@ const App = () =>
 
                 <tbody>
                     {items.map(item => (
-                        <tr class="{item.gclasses} {item.sclasses}" key={item.id}>
+                        <tr class={item.classes} key={item.id}>
                             <td class="card-image-td">{parse(item.image)}</td>
                             <td class="card-name-td">{parse(item.name)}</td>
                             <td class="card-desc-td">{parse(item.description)}</td>

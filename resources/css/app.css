@@ -194,12 +194,6 @@
     vertical-align: middle;
 }
 
-.socialIcon
-{
-    margin-right: 2em;
-    margin-bottom: 2em;
-}
-
 .boxView
 {
     border-radius: 0px 0px 5px 5px;
@@ -375,4 +369,9 @@ tbody tr
 #modstable td
 {
     @apply py-2;
+}
+
+.socialIcon
+{
+    @apply mb-4;
 }

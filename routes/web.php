@@ -131,8 +131,13 @@ Route::get('/retrieve', function(Request $request) {
         $data['buttons'] = '<div class="flex flex-col text-center"><a href="' . $viewLink . '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2">View</a> <a href="' . $origLink . '" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 mt-2" target="_blank">Original</a></div>';
 
         // Classes.
-        $data['sclasses'] = $mod->sclasses;
-        $data['gclasses'] = $mod->gclasses;
+        $data['classes'] = 'card-style-default';
+
+        if ($mod->sclasses || $mod->gclasses)
+        {
+            $data['classes'] = $mod->sclasses . ' ' . $mod->gclasses;
+        }
+
 
         if ($fakeRows)
         {
