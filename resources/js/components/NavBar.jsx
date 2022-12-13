@@ -5,11 +5,9 @@ const App = () =>
 {
     const [offset, setOffset] = useState(0);
     const [transparent, setTransparency] = useState(false);
-
-    useEffect(() => 
-    {
-        const onScroll = () => setOffset(window.pageYOffset);
-
+    const onScroll = useCallback(() => { 
+       setOffset(window.pageYOffset)
+       
         if (offset > 64)
         {
             setTransparency(false);
@@ -18,11 +16,14 @@ const App = () =>
         {
             setTransparency(true);
         }
-        
-        window.removeEventListener('scroll', onScroll);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
     }, [offset]);
+
+    useEffect(() => 
+    {
+        window.addEventListener('scroll', onScroll);
+        
+        return () => window.removeEventListener('scroll', onScroll);
+    }, [onScroll]);
 
     var bg = "bg-gray-800";
 
