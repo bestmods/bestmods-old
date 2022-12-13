@@ -2,6 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 
 import './components/Mods';
+import './components/NavBar';
 
 import jQuery from 'jquery';
 

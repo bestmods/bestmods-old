@@ -4,11 +4,9 @@
     <body>
         @include('background')
         
-        <div class="mx-auto px-10">
+        <div class="mx-auto">
             @include('header')
             @include($page)
-
-            @include('footer')
         </div>
     </body>
 </html>

@@ -11,13 +11,12 @@ async function loadMore(page)
     data = data.replace(/&lt;/g, '<');
     data = data.replace(/&gt;/g, '>');
 
-    console.log(data);
-
     return JSON.parse(data);
 }
 
 const App = () => 
 {
+    const [needMore, setNeedMore] = useState(0);
     const [items, setItems] = useState([]);
     const [pageNum, setPageNum] = useState(0);
     const [fetching, setFetching] = useState(false);
@@ -26,6 +25,7 @@ const App = () =>
     if (pageNum < 1)
     {
         setPageNum(1);
+        setNeedMore(true);
     }
 
     const fetchItems = useCallback(
@@ -47,6 +47,14 @@ const App = () =>
                 // Call our load more function.
                 const newItems = await loadMore(pageNum);
 
+                // If we need no longer receiving items, we're done.
+                if (newItems.length < 1)
+                {
+                    setNeedMore(false);
+
+                    return;
+                }
+
                 // Now set our items.
                 setItems([...items, ...newItems]);
             }
@@ -65,7 +73,7 @@ const App = () =>
     return (
     <InfiniteScroll
         loadMore={fetchItems}
-        hasMore={true}
+        hasMore={needMore}
         loader={<div class="loadindicator">Loading...</div>}>
             <table id="modstable" class="card">
                 <thead>
@@ -80,7 +88,7 @@ const App = () =>
 
                 <tbody>
                     {items.map(item => (
-                        <tr class="{{item.gclasses}} {{item.sclasses}}" key={item.id}>
+                        <tr class={item.classes} key={item.id}>
                             <td class="card-image-td">{parse(item.image)}</td>
                             <td class="card-name-td">{parse(item.name)}</td>
                             <td class="card-desc-td">{parse(item.description)}</td>
